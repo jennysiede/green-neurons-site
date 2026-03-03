@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Green Neurons</title>
+  <meta name="description" content="Technical framework architecture, modular AI systems, and intelligent design infrastructure." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #080d0a;
+      --bg-mid:    #0c1410;
+      --bg-card:   #0f1a14;
+      --green:     #7cfc8a;
+      --green-dim: #3a7a44;
+      --green-glow:#7cfc8a33;
+      --white:     #e8f0ea;
+      --muted:     #5a7060;
+      --serif:     'DM Serif Display', serif;
+      --mono:      'DM Mono', monospace;
+      --italic:    'Cormorant Garamond', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── Custom cursor ── */
+    #cursor {
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+      width: 10px; height: 10px;
+      background: var(--green);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease, opacity 0.2s;
+      mix-blend-mode: screen;
+    }
+    #cursor-ring {
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998;
+      width: 36px; height: 36px;
+      border: 1px solid var(--green-dim);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.2s, height 0.2s, border-color 0.2s;
+    }
+    body:has(a:hover) #cursor-ring,
+    body:has(button:hover) #cursor-ring {
+      width: 52px; height: 52px;
+      border-color: var(--green);
+    }
+
+    /* ── Canvas ── */
+    #neural-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    /* ── Layout ── */
+    .container {
+      position: relative; z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 0;
+      background: linear-gradient(to bottom, #080d0aee 60%, transparent);
+      backdrop-filter: blur(2px);
+    }
+    nav .container {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+      color: var(--green);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--white); font-style: italic; }
+    .nav-links {
+      display: flex; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 100px;
+    }
+    .hero-inner {
+      max-width: 780px;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 1px;
+      background: var(--green);
+      vertical-align: middle;
+      margin-right: 12px;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--green);
+    }
+    .hero-sub {
+      font-family: var(--italic);
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #9ab8a0;
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-cta {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+    .btn-primary {
+      padding: 14px 32px;
+      background: var(--green);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: #a0ffaf;
+      box-shadow: 0 0 28px var(--green-glow);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      padding: 14px 32px;
+      border: 1px solid var(--green-dim);
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      border-color: var(--green);
+      background: #7cfc8a0d;
+      transform: translateY(-1px);
+    }
+
+    /* ── Section base ── */
+    section { padding: 120px 0; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+    .section-label::before {
+      content: '[ ';
+    }
+    .section-label::after {
+      content: ' ]';
+    }
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .section-intro {
+      font-family: var(--italic);
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #9ab8a0;
+      max-width: 580px;
+      line-height: 1.8;
+      margin-bottom: 64px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--green-dim) 40%, var(--green-dim) 60%, transparent);
+      opacity: 0.4;
+      margin: 0;
+    }
+
+    /* ── Capabilities ── */
+    #capabilities { background: var(--bg); }
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: #1a2a1e;
+      border: 1px solid #1a2a1e;
+    }
+    .cap-card {
+      background: var(--bg-card);
+      padding: 40px 36px;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .cap-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--green);
+      transition: height 0.4s ease;
+    }
+    .cap-card:hover::before { height: 100%; }
+    .cap-card:hover { background: #111a14; }
+    .cap-number {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--green-dim);
+      margin-bottom: 24px;
+    }
+    .cap-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 16px;
+      color: var(--white);
+    }
+    .cap-desc {
+      font-family: var(--italic);
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .cap-tags {
+      margin-top: 24px;
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-dim);
+      border: 1px solid #1e3324;
+      padding: 4px 10px;
+    }
+
+    /* ── About / Philosophy ── */
+    #philosophy {
+      background: var(--bg-mid);
+    }
+    .philosophy-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .philosophy-quote {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-style: italic;
+      line-height: 1.3;
+      color: var(--green);
+      border-left: 2px solid var(--green);
+      padding-left: 28px;
+      margin-bottom: 32px;
+    }
+    .philosophy-body {
+      font-family: var(--italic);
+      font-size: 1rem;
+      font-weight: 300;
+      color: #8aaa92;
+      line-height: 1.9;
+    }
+    .philosophy-body p + p { margin-top: 20px; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 16px;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── Process ── */
+    #process { background: var(--bg); }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .process-steps::after {
+      content: '';
+      position: absolute;
+      top: 28px; left: 14%;
+      width: 72%; height: 1px;
+      background: linear-gradient(to right, var(--green-dim), var(--green), var(--green-dim));
+      opacity: 0.4;
+    }
+    .step {
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+    .step-dot {
+      width: 10px; height: 10px;
+      background: var(--green);
+      border-radius: 50%;
+      margin: 0 auto 32px;
+      position: relative; z-index: 1;
+      box-shadow: 0 0 16px var(--green-glow);
+    }
+    .step-num {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      color: var(--green-dim);
+      margin-bottom: 12px;
+    }
+    .step-title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .step-desc {
+      font-family: var(--italic);
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── Contact ── */
+    #contact { background: var(--bg-mid); }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-info h2 { margin-bottom: 20px; }
+    .contact-info p {
+      font-family: var(--italic);
+      font-size: 1rem;
+      font-weight: 300;
+      color: #8aaa92;
+      line-height: 1.9;
+      margin-bottom: 40px;
+    }
+    .contact-meta {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .contact-meta-item {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .contact-meta-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green-dim);
+      width: 70px;
+      flex-shrink: 0;
+    }
+    .contact-meta-value {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Contact form */
+    form { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green-dim);
+    }
+    input, textarea, select {
+      background: #0c1610;
+      border: 1px solid #1e3324;
+      color: var(--white);
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: none;
+      appearance: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--green-dim);
+      box-shadow: 0 0 0 1px #3a7a4422;
+    }
+    textarea { min-height: 120px; }
+    select option { background: #0c1610; }
+    .form-submit {
+      display: flex; align-items: center; gap: 16px;
+      margin-top: 8px;
+    }
+    #form-status {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--green);
+      display: none;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid #1a2a1e;
+    }
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--green);
+      text-decoration: none;
+    }
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex; gap: 24px; list-style: none;
+    }
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--green); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .philosophy-inner,
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .process-steps::after { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Neural canvas background -->
+<canvas id="neural-canvas"></canvas>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <a href="#" class="nav-logo">Green<span>Neurons</span></a>
+    <ul class="nav-links">
+      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Technical Design Intelligence</p>
+      <h1>Where <em>systems</em> think<br>and design breathes</h1>
+      <p class="hero-sub">
+        Modular AI architecture, technical framework design, and intelligent infrastructure — built to last decades, not sprints.
+      </p>
+      <div class="hero-cta">
+        <a href="#capabilities" class="btn-primary">View Capabilities</a>
+        <a href="#contact" class="btn-ghost">Start a Project</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Capabilities -->
+<section id="capabilities">
+  <div class="container">
+    <p class="section-label reveal">Capabilities</p>
+    <h2 class="reveal">Five disciplines.<br>One coherent system.</h2>
+    <p class="section-intro reveal">Each capability is a node in a larger network — interconnected, modular, and designed to compound over time.</p>
+
+    <div class="cap-grid">
+
+      <div class="cap-card reveal">
+        <div class="cap-number">01 ——</div>
+        <div class="cap-title">Technical Framework Architecture</div>
+        <p class="cap-desc">Designing the structural logic that underlies complex systems — from ontology schemas to modular component hierarchies built for longevity.</p>
+        <div class="cap-tags">
+          <span class="tag">Systems Design</span>
+          <span class="tag">Ontology</span>
+          <span class="tag">Architecture</span>
+        </div>
+      </div>
+
+      <div class="cap-card reveal">
+        <div class="cap-number">02 ——</div>
+        <div class="cap-title">Modular AI Systems</div>
+        <p class="cap-desc">Engineering composable AI workflows — M.Ai.D.E™-class design engines that reduce iteration cycles and enforce single-source-of-truth discipline.</p>
+        <div class="cap-tags">
+          <span class="tag">AI Workflow</span>
+          <span class="tag">M.Ai.D.E™</span>
+          <span class="tag">Automation</span>
+        </div>
+      </div>
+
+      <div class="cap-card reveal">
+        <div class="cap-number">03 ——</div>
+        <div class="cap-title">Patent Analysis &amp; FTO</div>
+        <p class="cap-desc">Freedom to Operate assessments and IP landscape mapping — translating dense legal terrain into clear strategic intelligence for product development.</p>
+        <div class="cap-tags">
+          <span class="tag">FTO</span>
+          <span class="tag">IP Strategy</span>
+          <span class="tag">Landscape</span>
+        </div>
+      </div>
+
+      <div class="cap-card reveal">
+        <div class="cap-number">04 ——</div>
+        <div class="cap-title">Apparel Technical Design</div>
+        <p class="cap-desc">End-to-end tech packs, specification audits, and production frameworks — bridging the gap between creative vision and manufacturable reality.</p>
+        <div class="cap-tags">
+          <span class="tag">Tech Packs</span>
+          <span class="tag">Spec Audits</span>
+          <span class="tag">Production</span>
+        </div>
+      </div>
+
+      <div class="cap-card reveal">
+        <div class="cap-number">05 ——</div>
+        <div class="cap-title">Wearable Intelligence</div>
+        <p class="cap-desc">Designing at the intersection of textile science and embedded systems — where Neurowēv™ fabric simulation meets functional wearable hardware.</p>
+        <div class="cap-tags">
+          <span class="tag">Neurowēv™</span>
+          <span class="tag">Wearables</span>
+          <span class="tag">Textile Science</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Philosophy -->
+<section id="philosophy">
+  <div class="container">
+    <div class="philosophy-inner">
+      <div>
+        <p class="section-label reveal">Philosophy</p>
+        <div class="philosophy-quote reveal">"Constraints enable."</div>
+        <div class="philosophy-body reveal">
+          <p>Most systems fail not from lack of capability, but from lack of architecture. We build infrastructure that thinks — frameworks disciplined enough to scale and flexible enough to last.</p>
+          <p>One source of truth. Composable modules. Decades, not sprints.</p>
+        </div>
+      </div>
+      <div>
+        <div class="stat-grid reveal">
+          <div class="stat-item">
+            <div class="stat-num">12→2</div>
+            <div class="stat-label">Design iteration cycles reduced</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Modularity by design</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Source of truth, always</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">0</div>
+            <div class="stat-label">Throwaway architectures built</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Process -->
+<section id="process">
+  <div class="container">
+    <p class="section-label reveal">Process</p>
+    <h2 class="reveal">From signal to structure</h2>
+    <p class="section-intro reveal">A disciplined four-phase methodology that turns complexity into clarity.</p>
+
+    <div class="process-steps">
+      <div class="step reveal">
+        <div class="step-dot"></div>
+        <div class="step-num">Phase 01</div>
+        <div class="step-title">Audit</div>
+        <p class="step-desc">Map the existing system — its constraints, failure modes, and untapped leverage points.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-dot"></div>
+        <div class="step-num">Phase 02</div>
+        <div class="step-title">Architect</div>
+        <p class="step-desc">Design the modular framework with single-source-of-truth discipline and long-term coherence.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-dot"></div>
+        <div class="step-num">Phase 03</div>
+        <div class="step-title">Implement</div>
+        <p class="step-desc">Build with precision — tech packs, AI workflows, patent maps, or embedded systems.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-dot"></div>
+        <div class="step-num">Phase 04</div>
+        <div class="step-title">Transfer</div>
+        <p class="step-desc">Hand off infrastructure your team can own, operate, and evolve indefinitely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <p class="section-label reveal">Contact</p>
+        <h2 class="reveal">Let's build<br><em style="color:var(--green);font-family:var(--serif);font-style:italic;">something lasting.</em></h2>
+        <p class="reveal">New engagements, collaborations, and consulting inquiries. Selective availability — pitch the problem, not the budget.</p>
+        <div class="contact-meta reveal">
+          <div class="contact-meta-item">
+            <span class="contact-meta-label">Location</span>
+            <span class="contact-meta-value">greenneurons.us</span>
+          </div>
+          <div class="contact-meta-item">
+            <span class="contact-meta-label">Response</span>
+            <span class="contact-meta-value">Within 48 hours</span>
+          </div>
+          <div class="contact-meta-item">
+            <span class="contact-meta-label">Scope</span>
+            <span class="contact-meta-value">Consulting &amp; Project Work</span>
+          </div>
+        </div>
+      </div>
+
+      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="interest">Area of Interest</label>
+          <select id="interest" name="interest">
+            <option value="">Select a capability</option>
+            <option>Technical Framework Architecture</option>
+            <option>Modular AI Systems</option>
+            <option>Patent Analysis &amp; FTO</option>
+            <option>Apparel Technical Design</option>
+            <option>Wearable Intelligence</option>
+            <option>Other / Multiple</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Describe the problem you're solving..." required></textarea>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn-primary">Send Message</button>
+          <span id="form-status"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <a href="#" class="footer-logo">GreenNeurons</a>
+    <span class="footer-copy">© 2026 Green Neurons · Quinne LLC</span>
+    <ul class="footer-links">
+      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  // ── Cursor ──
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+
+  // ── Neural Canvas ──
+  const canvas = document.getElementById('neural-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, nodes = [], mouse = { x: -9999, y: -9999 };
+  const NODE_COUNT = 68;
+  const MAX_DIST   = 160;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  document.addEventListener('mousemove', e => {
+    mouse.x = e.clientX; mouse.y = e.clientY;
+  });
+
+  for (let i = 0; i < NODE_COUNT; i++) {
+    nodes.push({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 1.5 + 1
+    });
+  }
+
+  function drawNeural() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Move nodes
+    for (const n of nodes) {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+
+      // Subtle mouse repulsion
+      const dx = n.x - mouse.x, dy = n.y - mouse.y;
+      const d  = Math.sqrt(dx*dx + dy*dy);
+      if (d < 90) {
+        n.vx += dx / d * 0.08;
+        n.vy += dy / d * 0.08;
+        // clamp velocity
+        const speed = Math.sqrt(n.vx*n.vx + n.vy*n.vy);
+        if (speed > 1.4) { n.vx /= speed*0.9; n.vy /= speed*0.9; }
+      }
+    }
+
+    // Draw edges
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < MAX_DIST) {
+          const alpha = (1 - d / MAX_DIST) * 0.55;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(124,252,138,${alpha})`;
+          ctx.lineWidth   = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw nodes
+    for (const n of nodes) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = '#7cfc8a';
+      ctx.globalAlpha = 0.55;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    requestAnimationFrame(drawNeural);
+  }
+  drawNeural();
+
+  // ── Scroll reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = `${(i % 4) * 0.08}s`;
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // ── Formspree AJAX submit ──
+  const form   = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending…';
+    btn.style.opacity = '0.6';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        status.style.display = 'inline';
+        status.textContent = '✓ Message received.';
+        form.reset();
+      } else {
+        status.style.display = 'inline';
+        status.style.color = '#ff7a7a';
+        status.textContent = 'Something went wrong. Try again.';
+      }
+    } catch {
+      status.style.display = 'inline';
+      status.style.color = '#ff7a7a';
+      status.textContent = 'Network error.';
+    }
+
+    btn.textContent = 'Send Message';
+    btn.style.opacity = '1';
+  });
+</script>
+</body>
+</html>
