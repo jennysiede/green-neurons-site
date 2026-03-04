@@ -1,0 +1,15 @@
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editor
+*.code-workspace
+
+# Temp
+*.tmp
+*.bak
+
+# Vite / Node
+tracker-dev/node_modules/
+tracker-dev/dist/

@@ -1,0 +1,31 @@
+{
+  // ── Terminal ──────────────────────────────────────────────
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.cwd": "${workspaceFolder}",
+
+  // ── Git ───────────────────────────────────────────────────
+  "git.enableSmartCommit": false,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "git.decorations.enabled": true,
+
+  // ── Editor ────────────────────────────────────────────────
+  "editor.formatOnSave": false,
+  "editor.wordWrap": "on",
+  "editor.tabSize": 2,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // ── File associations ─────────────────────────────────────
+  "files.associations": {
+    "*.html": "html",
+    "*.jsx":  "javascriptreact"
+  },
+
+  // ── Exclude noise from explorer ───────────────────────────
+  "files.exclude": {
+    "**/.git":          true,
+    "**/Thumbs.db":     true,
+    "**/.DS_Store":     true
+  }
+}

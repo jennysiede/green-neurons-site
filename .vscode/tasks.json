@@ -1,0 +1,88 @@
+{
+  // ── VS Code Tasks for Green Neurons ──────────────────────
+  // Run via: Terminal → Run Task  (or Ctrl+Shift+P → "Tasks: Run Task")
+  "version": "2.0.0",
+  "tasks": [
+
+    {
+      "label": "Tracker: Install deps (first time only)",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}\\tracker-dev" },
+      "presentation": { "reveal": "always", "panel": "shared", "focus": true },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Tracker: Dev server (localhost:3333)",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": { "cwd": "${workspaceFolder}\\tracker-dev" },
+      "isBackground": true,
+      "presentation": { "reveal": "always", "panel": "dedicated", "focus": false },
+      "problemMatcher": {
+        "pattern": { "regexp": "^$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "VITE",
+          "endsPattern": "Local:"
+        }
+      }
+    },
+
+    {
+      "label": "Tracker: Build (static export)",
+      "type": "shell",
+      "command": "npm run build",
+      "options": { "cwd": "${workspaceFolder}\\tracker-dev" },
+      "presentation": { "reveal": "always", "panel": "shared", "focus": true },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Git: Commit (prompt for message)",
+      "type": "shell",
+      "command": "powershell",
+      "args": ["-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\commit.ps1"],
+      "presentation": { "reveal": "always", "panel": "shared", "focus": true },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Git: Commit + Push",
+      "type": "shell",
+      "command": "powershell",
+      "args": ["-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\commit.ps1", "-Push"],
+      "presentation": { "reveal": "always", "panel": "shared", "focus": true },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Git: Status",
+      "type": "shell",
+      "command": "git",
+      "args": ["status"],
+      "presentation": { "reveal": "always", "panel": "shared", "focus": false },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Git: Log (last 10)",
+      "type": "shell",
+      "command": "git",
+      "args": ["log", "--oneline", "--graph", "--decorate", "-10"],
+      "presentation": { "reveal": "always", "panel": "shared", "focus": false },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Git: Push",
+      "type": "shell",
+      "command": "git",
+      "args": ["push"],
+      "presentation": { "reveal": "always", "panel": "shared", "focus": false },
+      "problemMatcher": []
+    }
+
+  ]
+}
