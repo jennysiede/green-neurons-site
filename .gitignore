@@ -13,3 +13,7 @@ desktop.ini
 # Vite / Node
 tracker-dev/node_modules/
 tracker-dev/dist/
+
+# Wrangler
+.wrangler/
+node_modules/
