@@ -250,7 +250,7 @@ export default function SupplyChainTracker() {
           Apparel Supply Chain Route Tracker
         </h1>
         <p style={{ margin: "6px 0 0", fontSize: "12px", color: THEME.headerMuted, letterSpacing: "1px" }}>
-          Asia → USA · Active Disruption Status · Q1 2026
+          Asia → USA · Analyst-Curated Disruption Intelligence · Q1 2026
         </p>
       </div>
 
@@ -513,7 +513,7 @@ export default function SupplyChainTracker() {
           fontSize: "10px", color: THEME.textMuted,
           letterSpacing: "0.5px", lineHeight: 1.8,
         }}>
-          Data sources: Project44 · CH Robinson · Röhlig Logistics · NNR Global · Atlas Institute for International Affairs · Updated Q1 2026
+          Reference sources: Project44 · CH Robinson · Röhlig Logistics · NNR Global · Atlas Institute for International Affairs · Last reviewed Q1 2026
           <br />
           Transit times and tariff rates are indicative. Verify current rates with your freight forwarder before placing orders.
         </div>
