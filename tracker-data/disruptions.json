@@ -20,5 +20,6 @@
       "active": true
     }
   ],
-  "notes": "Edit this file to update tracker alerts. Set active:false to hide an alert without deleting it. Run tracker_update.py (or tracker_update.bat) to push changes live."
+  "notes": "Auto-updated by tracker_fetch.py. Manual alerts are preserved. Edit active:false to suppress any alert.",
+  "last_fetch": "2026-03-09 14:09"
 }

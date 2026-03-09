@@ -17,3 +17,6 @@ tracker-dev/dist/
 # Wrangler
 .wrangler/
 node_modules/
+
+# Tracker fetch log (local only)
+tracker-data/fetch_log.txt
