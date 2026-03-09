@@ -1,0 +1,24 @@
+{
+  "last_reviewed": "2026-03-09",
+  "alerts": [
+    {
+      "id": "canada-border",
+      "level": "warning",
+      "title": "Canada Border — Active",
+      "icon": "⚠",
+      "body": "US–Canada trade war (Mar 4, 2025). 35% tariff on non-CUSMA goods as of Aug 1, 2025. Border delays and customs complexity.",
+      "note": "→ Route directly to US ports. Avoid Canadian transshipment hubs.",
+      "active": true
+    },
+    {
+      "id": "red-sea-suez",
+      "level": "critical",
+      "title": "Red Sea / Suez — Closed",
+      "icon": "🚨",
+      "body": "Houthi attacks ongoing since Nov 2023. 75% drop in Suez canal traffic. All major carriers rerouted via Cape of Good Hope.",
+      "note": "→ Adds 10–14 days + significant cost uplift to affected routes.",
+      "active": true
+    }
+  ],
+  "notes": "Edit this file to update tracker alerts. Set active:false to hide an alert without deleting it. Run tracker_update.py (or tracker_update.bat) to push changes live."
+}
