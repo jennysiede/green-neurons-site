@@ -20,3 +20,6 @@ node_modules/
 
 # Tracker fetch log (local only)
 tracker-data/fetch_log.txt
+
+# vault/ is intentionally committed — docs travel with the code
+# private repo, no exposure risk
