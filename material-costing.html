@@ -75,6 +75,7 @@
   }
   .row-2 { grid-template-columns: 1fr 1fr; }
   .row-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .row-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 
   /* ── Field ── */
   .field { display: flex; flex-direction: column; }
@@ -346,6 +347,41 @@
     font-family: var(--font-mono);
   }
 
+  /* ── Cuttable width display ── */
+  .cuttable-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 9px 14px;
+    margin-top: -8px;
+    margin-bottom: 20px;
+  }
+  .cuttable-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cuttable-val {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--slate);
+    text-align: center;
+  }
+  .cuttable-note {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    font-style: italic;
+  }
+
   /* ── Divider ── */
   .divider {
     border: none;
@@ -381,7 +417,7 @@
 
 <!-- Unit + Price -->
 <div class="label">Configuration</div>
-<div class="row row-3">
+<div class="row row-4">
   <div class="field">
     <label>Unit</label>
     <div class="toggle-group">
@@ -395,8 +431,18 @@
   </div>
   <div class="field">
     <label>Fabric Width (<span class="unit-label">in</span>)</label>
-    <input type="number" id="width" placeholder="60" min="1" step="1">
+    <input type="number" id="width" placeholder="60" min="1" step="1" oninput="updateCuttable()">
   </div>
+  <div class="field">
+    <label>Selvedge Deduction (<span class="unit-label">in</span>)</label>
+    <input type="number" id="selvedge" placeholder="2" min="0" step="0.5" value="2" oninput="updateCuttable()">
+  </div>
+</div>
+
+<div class="cuttable-row" id="cuttable-row" style="display:none">
+  <span class="cuttable-label">Cuttable Width</span>
+  <span class="cuttable-val" id="cuttable-val">—</span>
+  <span class="cuttable-note">selvage-to-selvage minus selvedge allowance</span>
 </div>
 
 <hr class="divider">
@@ -476,6 +522,20 @@
     { name: 'L',  qty: 12, yds: 2.0  },
   ];
 
+  function updateCuttable() {
+    const w = parseFloat(document.getElementById('width').value);
+    const s = parseFloat(document.getElementById('selvedge').value) || 0;
+    const row = document.getElementById('cuttable-row');
+    if (!isNaN(w) && w > 0) {
+      const cuttable = Math.max(0, w - s);
+      const uLabel = unit === 'yd' ? 'in' : 'cm';
+      document.getElementById('cuttable-val').textContent = `${cuttable.toFixed(1)}″ cuttable`;
+      row.style.display = 'grid';
+    } else {
+      row.style.display = 'none';
+    }
+  }
+
   function setUnit(u) {
     unit = u;
     document.getElementById('btn-yd').classList.toggle('active', u === 'yd');
@@ -484,6 +544,7 @@
     const wlabel = u === 'yd' ? 'in' : 'cm';
     document.querySelectorAll('.unit-label').forEach(el => el.textContent = wlabel);
     document.querySelectorAll('.unit-label2').forEach(el => el.textContent = label);
+    updateCuttable();
     document.querySelectorAll('.yds-label').forEach(el => el.placeholder = u === 'yd' ? '1.75' : '1.60');
   }
 
@@ -585,6 +646,8 @@
     document.getElementById('price').value = '';
     document.getElementById('price').classList.remove('error');
     document.getElementById('width').value = '';
+    document.getElementById('selvedge').value = 2;
+    document.getElementById('cuttable-row').style.display = 'none';
     // Reset waste
     document.getElementById('waste').value = 5;
     document.getElementById('waste-val').textContent = '5%';
