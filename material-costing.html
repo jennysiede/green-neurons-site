@@ -222,9 +222,14 @@
     text-align: right;
   }
 
-  /* ── Calculate button ── */
+  /* ── Calculate / Reset buttons ── */
+  .btn-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
   .btn-calc {
-    width: 100%;
     padding: 14px;
     background: var(--navy);
     color: var(--cream);
@@ -236,9 +241,23 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: background 0.15s;
-    margin-bottom: 28px;
   }
   .btn-calc:hover { background: var(--slate); }
+  .btn-reset {
+    padding: 14px 20px;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .btn-reset:hover { border-color: var(--error); color: var(--error); }
 
   /* ── Results ── */
   .results {
@@ -410,8 +429,11 @@
   </div>
 </div>
 
-<!-- Calculate -->
-<button class="btn-calc" onclick="calculate()">Calculate →</button>
+<!-- Calculate / Reset -->
+<div class="btn-row">
+  <button class="btn-calc" onclick="calculate()">Calculate →</button>
+  <button class="btn-reset" onclick="reset()">Reset</button>
+</div>
 
 <!-- Results -->
 <div class="results" id="results">
@@ -555,6 +577,25 @@
 
     document.getElementById('results').classList.add('visible');
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function reset() {
+    // Clear config
+    setUnit('yd');
+    document.getElementById('price').value = '';
+    document.getElementById('price').classList.remove('error');
+    document.getElementById('width').value = '';
+    // Reset waste
+    document.getElementById('waste').value = 5;
+    document.getElementById('waste-val').textContent = '5%';
+    // Clear size rows and reload defaults
+    document.querySelectorAll('#size-grid .size-row:not(.header-row)').forEach(r => r.remove());
+    sizeCount = 0;
+    defaultSizes.forEach(s => addSize(s.name, s.qty, s.yds));
+    // Hide results
+    document.getElementById('results').classList.remove('visible');
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // Init with default sizes
