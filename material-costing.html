@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Material Costing — Green Neurons</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:    #f5f1eb;
+    --navy:     #1a2535;
+    --slate:    #3d5a80;
+    --ink:      #2c2c2c;
+    --muted:    #8a8070;
+    --border:   #ddd8ce;
+    --accent:   #c8a96e;
+    --error:    #b85450;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 32px 24px 48px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  header h1 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+  }
+  header span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ── Section label ── */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  /* ── Row layout ── */
+  .row {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .row-2 { grid-template-columns: 1fr 1fr; }
+  .row-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  /* ── Field ── */
+  .field { display: flex; flex-direction: column; }
+  .field label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--slate);
+    margin-bottom: 5px;
+    letter-spacing: 0.01em;
+  }
+  .field input, .field select {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 9px 11px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--slate);
+  }
+  .field input.error { border-color: var(--error); }
+
+  /* ── Unit toggle ── */
+  .toggle-group {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    background: white;
+  }
+  .toggle-group button {
+    flex: 1;
+    padding: 9px 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.06em;
+  }
+  .toggle-group button.active {
+    background: var(--navy);
+    color: var(--cream);
+  }
+
+  /* ── Size run table ── */
+  .size-section { margin-bottom: 24px; }
+  .size-grid {
+    display: grid;
+    gap: 10px;
+  }
+  .size-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+  }
+  .size-row .field label { font-size: 10px; }
+  .size-row.header-row {
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+  .size-row.header-row span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .btn-icon {
+    width: 32px; height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: white;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.15s, color 0.15s;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-bottom: 0;
+    align-self: end;
+  }
+  .btn-icon:hover { border-color: var(--error); color: var(--error); }
+
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 7px 14px;
+    background: transparent;
+    border: 1px dashed var(--border);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-add:hover { border-color: var(--slate); color: var(--slate); }
+
+  /* ── Waste slider ── */
+  .waste-section { margin-bottom: 28px; }
+  .waste-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--slate);
+    border: 2px solid var(--cream);
+    box-shadow: 0 0 0 1px var(--slate);
+  }
+  .waste-val {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--navy);
+    width: 40px;
+    text-align: right;
+  }
+
+  /* ── Calculate button ── */
+  .btn-calc {
+    width: 100%;
+    padding: 14px;
+    background: var(--navy);
+    color: var(--cream);
+    border: none;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-bottom: 28px;
+  }
+  .btn-calc:hover { background: var(--slate); }
+
+  /* ── Results ── */
+  .results {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    display: none;
+  }
+  .results.visible { display: block; }
+
+  .results-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .results-header span:first-child {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .results-header span:last-child {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .results-table th {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: white;
+  }
+  .results-table th:last-child { text-align: right; }
+  .results-table td {
+    padding: 10px 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--border);
+  }
+  .results-table td:last-child { text-align: right; color: var(--slate); font-weight: 500; }
+  .results-table tr:last-child td { border-bottom: none; }
+  .results-table tr:nth-child(even) td { background: #faf8f4; }
+
+  .results-footer {
+    background: #f0ece4;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+  .results-footer .foot-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .results-footer .foot-val {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .waste-note {
+    font-size: 11px;
+    color: var(--muted);
+    padding: 8px 16px 12px;
+    background: white;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+  }
+
+  /* ── Divider ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 36px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 480px) {
+    .row-2, .row-3 { grid-template-columns: 1fr; }
+    .size-row { grid-template-columns: 70px 1fr 1fr auto; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Material Costing</h1>
+  <span>Green Neurons Framework</span>
+</header>
+
+<!-- Unit + Price -->
+<div class="label">Configuration</div>
+<div class="row row-3">
+  <div class="field">
+    <label>Unit</label>
+    <div class="toggle-group">
+      <button id="btn-yd" class="active" onclick="setUnit('yd')">YD</button>
+      <button id="btn-m"  onclick="setUnit('m')">M</button>
+    </div>
+  </div>
+  <div class="field">
+    <label>Price per Unit ($)</label>
+    <input type="number" id="price" placeholder="0.00" min="0" step="0.01">
+  </div>
+  <div class="field">
+    <label>Fabric Width (<span class="unit-label">in</span>)</label>
+    <input type="number" id="width" placeholder="60" min="1" step="1">
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- Size run -->
+<div class="size-section">
+  <div class="label">Size Run</div>
+
+  <div class="size-grid" id="size-grid">
+    <div class="size-row header-row">
+      <span>Size</span>
+      <span>Qty</span>
+      <span><span class="unit-label2">Yds</span> / unit</span>
+      <span></span>
+    </div>
+    <!-- rows injected here -->
+  </div>
+
+  <button class="btn-add" onclick="addSize()">+ Add Size</button>
+</div>
+
+<hr class="divider">
+
+<!-- Waste -->
+<div class="waste-section">
+  <div class="label">Waste / Shrinkage Allowance</div>
+  <div class="waste-row">
+    <input type="range" id="waste" min="0" max="25" value="5" step="0.5" oninput="updateWaste(this.value)">
+    <span class="waste-val" id="waste-val">5%</span>
+  </div>
+</div>
+
+<!-- Calculate -->
+<button class="btn-calc" onclick="calculate()">Calculate →</button>
+
+<!-- Results -->
+<div class="results" id="results">
+  <div class="results-header">
+    <span>Total Fabric Cost</span>
+    <span id="res-total">—</span>
+  </div>
+  <table class="results-table">
+    <thead>
+      <tr>
+        <th>Size</th>
+        <th>Units</th>
+        <th>Yds/unit</th>
+        <th>Subtotal Yds</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody id="res-body"></tbody>
+  </table>
+  <div class="waste-note" id="waste-note"></div>
+  <div class="results-footer">
+    <span class="foot-label">Grand Total</span>
+    <span class="foot-val" id="res-grand">—</span>
+  </div>
+</div>
+
+<footer>
+  <span>greenneurons.us</span>
+  <span>Neurowēv™ Framework</span>
+</footer>
+
+<script>
+  let unit = 'yd';
+  let sizeCount = 0;
+
+  const defaultSizes = [
+    { name: 'XS', qty: 12, yds: 1.75 },
+    { name: 'S',  qty: 24, yds: 1.75 },
+    { name: 'M',  qty: 24, yds: 2.0  },
+    { name: 'L',  qty: 12, yds: 2.0  },
+  ];
+
+  function setUnit(u) {
+    unit = u;
+    document.getElementById('btn-yd').classList.toggle('active', u === 'yd');
+    document.getElementById('btn-m').classList.toggle('active', u === 'm');
+    const label = u === 'yd' ? 'Yds' : 'Mtrs';
+    const wlabel = u === 'yd' ? 'in' : 'cm';
+    document.querySelectorAll('.unit-label').forEach(el => el.textContent = wlabel);
+    document.querySelectorAll('.unit-label2').forEach(el => el.textContent = label);
+    document.querySelectorAll('.yds-label').forEach(el => el.placeholder = u === 'yd' ? '1.75' : '1.60');
+  }
+
+  function addSize(name = '', qty = '', yds = '') {
+    const grid = document.getElementById('size-grid');
+    const id = ++sizeCount;
+
+    const row = document.createElement('div');
+    row.className = 'size-row';
+    row.id = `sr-${id}`;
+    row.innerHTML = `
+      <div class="field">
+        <input type="text" placeholder="e.g. M" value="${name}" style="text-align:center">
+      </div>
+      <div class="field">
+        <input type="number" placeholder="0" value="${qty}" min="0" step="1" style="text-align:right">
+      </div>
+      <div class="field">
+        <input type="number" placeholder="1.75" value="${yds}" min="0" step="0.05" class="yds-label" style="text-align:right">
+      </div>
+      <button class="btn-icon" onclick="removeSize('sr-${id}')" title="Remove">×</button>
+    `;
+    grid.appendChild(row);
+  }
+
+  function removeSize(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+  }
+
+  function updateWaste(v) {
+    document.getElementById('waste-val').textContent = v + '%';
+  }
+
+  function calculate() {
+    const price = parseFloat(document.getElementById('price').value);
+    const waste  = parseFloat(document.getElementById('waste').value) / 100;
+
+    if (isNaN(price) || price <= 0) {
+      document.getElementById('price').classList.add('error');
+      document.getElementById('price').focus();
+      return;
+    }
+    document.getElementById('price').classList.remove('error');
+
+    const rows = document.querySelectorAll('#size-grid .size-row:not(.header-row)');
+    if (!rows.length) { alert('Add at least one size.'); return; }
+
+    let tableHTML = '';
+    let grandYds = 0;
+    let grandCost = 0;
+
+    rows.forEach(row => {
+      const inputs = row.querySelectorAll('input');
+      const sizeName = inputs[0].value.trim() || '—';
+      const qty  = parseFloat(inputs[1].value) || 0;
+      const yds  = parseFloat(inputs[2].value) || 0;
+
+      const subtotalYds = qty * yds;
+      const subtotalCost = subtotalYds * price;
+
+      grandYds  += subtotalYds;
+      grandCost += subtotalCost;
+
+      const uLabel = unit === 'yd' ? 'yd' : 'm';
+      tableHTML += `<tr>
+        <td>${sizeName}</td>
+        <td>${qty}</td>
+        <td>${yds.toFixed(2)} ${uLabel}</td>
+        <td>${subtotalYds.toFixed(2)} ${uLabel}</td>
+        <td>$${subtotalCost.toFixed(2)}</td>
+      </tr>`;
+    });
+
+    const wasteYds  = grandYds * waste;
+    const wasteCost = wasteYds * price;
+    const totalYds  = grandYds + wasteYds;
+    const totalCost = grandCost + wasteCost;
+    const uLabel    = unit === 'yd' ? 'yds' : 'mtrs';
+    const wasteVal  = document.getElementById('waste-val').textContent;
+
+    document.getElementById('res-body').innerHTML = tableHTML;
+    document.getElementById('res-total').textContent = `${totalYds.toFixed(2)} ${uLabel}`;
+    document.getElementById('res-grand').textContent = `$${totalCost.toFixed(2)}`;
+    document.getElementById('waste-note').textContent =
+      `Includes ${wasteVal} waste/shrinkage: +${wasteYds.toFixed(2)} ${uLabel} (+$${wasteCost.toFixed(2)})`;
+
+    // Update header column label
+    document.querySelectorAll('#results th')[2].textContent = `${unit === 'yd' ? 'Yds' : 'Mtrs'}/unit`;
+    document.querySelectorAll('#results th')[3].textContent = `Subtotal ${unit === 'yd' ? 'Yds' : 'Mtrs'}`;
+
+    document.getElementById('results').classList.add('visible');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Init with default sizes
+  defaultSizes.forEach(s => addSize(s.name, s.qty, s.yds));
+</script>
+</body>
+</html>
