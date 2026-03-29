@@ -32,6 +32,7 @@
 | `01 architecture/structure-03112026.md` | Vault folder tree (updated 2026-03-29) |
 | `06 ops/tools-structure.md` | All domain-hosted tools — inventory, hosting model, Substack relationships, decision flow |
 | `06 ops/tracker-op.md` | Supply chain tracker — fetch/update/deploy cycle |
+| `06 ops/commit-conventions.md` | Commit message prefix convention for repo history |
 | `07 assets/greenneurons_site_structure.svg` | Section layout + nav links + contact form diagram |
 | `07 assets/greenneurons-site-doc.md` | Wrapper → `01 architecture/greenneurons.us site-architecture.md` |
 
