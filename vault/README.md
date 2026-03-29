@@ -1,12 +1,11 @@
 # Green Neurons — Site Vault
 **Site:** greenneurons.us  
 **Legal entity:** Green Neurons Design and Technologies PBC  
-**Converted:** August 11, 2021  
 **DBA:** Green Neurons Design + Development  
 **Parent:** Quinne LLC  
 **Deployed:** Cloudflare Pages  
 **Repo:** `C:\Users\green\claude-work\green-neurons\`  
-**Last updated:** 2026-03-11
+**Last updated:** 2026-03-29
 
 ---
 
@@ -20,6 +19,21 @@
 | `03 design-decisions/` | Design token rationale, UX choices, component decisions |
 | `04 intelligence-tools/` | Each tool's spec, strategy, and status |
 | `05 substack/` | Newsletter strategy, post drafts, cross-linking plan |
+| `06 ops/` | Ops runbooks — tracker feed, tools structure, deploy cycles |
+| `07 assets/` | Visual reference materials — diagrams, wrappers |
+
+---
+
+## Key Documents
+
+| File | Description |
+|---|---|
+| `01 architecture/greenneurons.us site-architecture.md` | Canonical site reference — stack, sections, tokens, JS modules, tools inventory, known gaps |
+| `01 architecture/structure-03112026.md` | Vault folder tree (updated 2026-03-29) |
+| `06 ops/tools-structure.md` | All domain-hosted tools — inventory, hosting model, Substack relationships, decision flow |
+| `06 ops/tracker-op.md` | Supply chain tracker — fetch/update/deploy cycle |
+| `07 assets/greenneurons_site_structure.svg` | Section layout + nav links + contact form diagram |
+| `07 assets/greenneurons-site-doc.md` | Wrapper → `01 architecture/greenneurons.us site-architecture.md` |
 
 ---
 
@@ -31,15 +45,20 @@
 | Fonts | Playfair Display · DM Sans · DM Mono (Google Fonts) |
 | Deploy | `commit.ps1` → GitHub → Cloudflare Pages auto-build |
 | Forms | Formspree |
-| Data | Python fetch scripts → `tracker-data/` JSON |
 
 ---
 
 ## Active Work Threads
 
-- [ ] Color Trends tool → bake into `index.html`
+- [x] Color Trends tool → baked into `index.html` ✅
+- [x] Substack account setup → **Design Signals Quick Bake** ✅ live at greenneurons.substack.com
+- [x] Subscribe button → wired to Substack URL ✅
+- [x] Material Costing Calculator → live at `greenneurons.us/material-costing` ✅
 - [ ] 2×2 tool launcher card design (for 4-tool layout)
-- [ ] Substack account setup → **Design Signals Quick Bake**
-- [ ] Subscribe button → wire to real Substack URL before next commit
+- [ ] `#intelligence` section → planned end of March 2026
+- [ ] Mobile breakpoints → `#philosophy`, `#process`, `#contact` grids unhandled
+- [ ] OG/Twitter card meta tags → missing
+- [ ] `robots.txt` + `sitemap.xml` → not in repo
+- [ ] Formspree endpoint → move out of hardcoded `action` attr
 - [ ] Uniform Cost Estimator → spec TBD
 - [ ] Fabric/Material Quick-Ref → spec TBD
