@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Material Costing &mdash; Green Neurons Design + Development</title>
+<title>Material Costing - Green Neurons Design + Development</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -85,7 +85,7 @@ footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--border);font-
   <h1>Material Costing</h1>
   <a href="https://greenneurons.us" target="_blank">Green Neurons Design + Development</a>
 </header>
-<div class="currency-badge">Currency in use: <strong>USD ($)</strong> &nbsp;&middot;&nbsp; Neurow&#275;v&trade; Framework</div>
+<div class="currency-badge">Currency in use: <strong>USD ($)</strong> &nbsp;&middot;&nbsp; Neurow&#275;v&#x2122; Framework</div>
 <div class="label">Configuration</div>
 <div class="row row-4">
   <div class="field">
@@ -101,16 +101,16 @@ footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--border);font-
   </div>
   <div class="field">
     <label>Fabric Width (<span class="unit-label">in</span>)</label>
-    <input type="number" id="width" placeholder="60" min="1" step="1" oninput="updateCuttable()">
+    <input type="number" id="width" placeholder="60" value="60" min="1" step="1" oninput="updateCuttable()">
   </div>
   <div class="field">
     <label>Selvedge Deduction (<span class="unit-label">in</span>)</label>
-    <input type="number" id="selvedge" placeholder="2" min="0" step="0.5" value="2" oninput="updateCuttable()">
+    <input type="number" id="selvedge" placeholder="2" value="2" min="0" step="0.5" oninput="updateCuttable()">
   </div>
 </div>
 <div class="cuttable-row" id="cuttable-row" style="display:none">
   <span class="cuttable-label">Cuttable Width</span>
-  <span class="cuttable-val" id="cuttable-val">&mdash;</span>
+  <span class="cuttable-val" id="cuttable-val">--</span>
   <span class="cuttable-note">selvage-to-selvage minus selvedge allowance</span>
 </div>
 <hr class="divider">
@@ -141,7 +141,7 @@ footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--border);font-
 <div class="results" id="results">
   <div class="results-header">
     <span>Total Fabric Cost</span>
-    <span id="res-total">&mdash;</span>
+    <span id="res-total">--</span>
   </div>
   <table class="results-table">
     <thead>
@@ -157,12 +157,12 @@ footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--border);font-
   <div class="waste-note" id="waste-note"></div>
   <div class="results-footer">
     <span class="foot-label">Grand Total (USD)</span>
-    <span class="foot-val" id="res-grand">&mdash;</span>
+    <span class="foot-val" id="res-grand">--</span>
   </div>
 </div>
 <footer>
   <div class="footer-left">
-    <span class="footer-studio">&copy; Green Neurons Design + Development. All Rights Reserved.</span>
+    <span class="footer-studio">&#169; Green Neurons Design + Development. All Rights Reserved.</span>
     <div class="footer-links">
       <a href="https://greenneurons.us" target="_blank">greenneurons.us</a>
       <a href="https://greenneurons.substack.com" target="_blank">greenneurons.substack.com</a>
@@ -170,141 +170,152 @@ footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--border);font-
     </div>
     <div class="print-timestamp" id="print-timestamp"></div>
   </div>
-  <span class="footer-right">Neurow&#275;v&trade; Framework</span>
+  <span class="footer-right">Neurow&#275;v&#x2122; Framework</span>
 </footer>
 <script>
-var unit='yd',sizeCount=0;
-var defaultSizes=[
-  {name:'XS',qty:12,yds:1.75},
-  {name:'S', qty:24,yds:1.75},
-  {name:'M', qty:24,yds:2.0},
-  {name:'L', qty:12,yds:2.0}
+var unit = 'yd';
+var sizeCount = 0;
+var defaultSizes = [
+  {name:'XS', qty:12, yds:1.75},
+  {name:'S',  qty:24, yds:1.75},
+  {name:'M',  qty:24, yds:2.0},
+  {name:'L',  qty:12, yds:2.0}
 ];
-function updateCuttable(){
-  var w=parseFloat(document.getElementById('width').value);
-  var s=parseFloat(document.getElementById('selvedge').value)||0;
-  var row=document.getElementById('cuttable-row');
-  if(!isNaN(w)&&w>0){
-    document.getElementById('cuttable-val').textContent=Math.max(0,w-s).toFixed(1)+'\u2033 cuttable';
-    row.style.display='grid';
-  }else{row.style.display='none';}
+
+function updateCuttable() {
+  var w = parseFloat(document.getElementById('width').value);
+  var s = parseFloat(document.getElementById('selvedge').value) || 0;
+  var row = document.getElementById('cuttable-row');
+  if (!isNaN(w) && w > 0) {
+    document.getElementById('cuttable-val').textContent = Math.max(0, w - s).toFixed(1) + '\u2033 cuttable';
+    row.style.display = 'grid';
+  } else {
+    row.style.display = 'none';
+  }
 }
-function setUnit(u){
-  var prev=unit;
-  unit=u;
-  document.getElementById('btn-yd').classList.toggle('active',u==='yd');
-  document.getElementById('btn-m').classList.toggle('active',u==='m');
-  document.querySelectorAll('.unit-label').forEach(function(el){el.textContent=u==='yd'?'in':'cm';});
-  document.querySelectorAll('.unit-label2').forEach(function(el){el.textContent=u==='yd'?'Yds':'Mtrs';});
-  document.querySelectorAll('.yds-label').forEach(function(el){el.placeholder=u==='yd'?'1.75':'1.60';});
-  // Convert width and selvedge values
-  var toM=(u==='m'&&prev==='yd');
-  var toYd=(u==='yd'&&prev==='m');
-  var wEl=document.getElementById('width');
-  var sEl=document.getElementById('selvedge');
-  if(wEl.value){
-    var wv=parseFloat(wEl.value);
-    if(toM) wEl.value=(wv*2.54).toFixed(1);
-    else if(toYd) wEl.value=(wv/2.54).toFixed(1);
+
+function setUnit(u) {
+  var prev = unit;
+  unit = u;
+  document.getElementById('btn-yd').classList.toggle('active', u === 'yd');
+  document.getElementById('btn-m').classList.toggle('active', u === 'm');
+  document.querySelectorAll('.unit-label').forEach(function(el) { el.textContent = u === 'yd' ? 'in' : 'cm'; });
+  document.querySelectorAll('.unit-label2').forEach(function(el) { el.textContent = u === 'yd' ? 'Yds' : 'Mtrs'; });
+  document.querySelectorAll('.yds-label').forEach(function(el) { el.placeholder = u === 'yd' ? '1.75' : '1.60'; });
+  var toM = (u === 'm' && prev === 'yd');
+  var toYd = (u === 'yd' && prev === 'm');
+  var wEl = document.getElementById('width');
+  var sEl = document.getElementById('selvedge');
+  if (wEl.value) {
+    var wv = parseFloat(wEl.value);
+    if (toM) wEl.value = (wv * 2.54).toFixed(1);
+    else if (toYd) wEl.value = (wv / 2.54).toFixed(1);
   }
-  if(sEl.value){
-    var sv=parseFloat(sEl.value);
-    if(toM) sEl.value=(sv*2.54).toFixed(1);
-    else if(toYd) sEl.value=(sv/2.54).toFixed(1);
+  if (sEl.value) {
+    var sv = parseFloat(sEl.value);
+    if (toM) sEl.value = (sv * 2.54).toFixed(1);
+    else if (toYd) sEl.value = (sv / 2.54).toFixed(1);
   }
-  // Convert yds/unit values in size run rows
-  document.querySelectorAll('#size-grid .size-row:not(.header-row)').forEach(function(row){
-    var ydsInput=row.querySelector('.yds-label');
-    if(ydsInput&&ydsInput.value){
-      var yv=parseFloat(ydsInput.value);
-      if(toM) ydsInput.value=(yv*0.9144).toFixed(2);
-      else if(toYd) ydsInput.value=(yv/0.9144).toFixed(2);
+  document.querySelectorAll('#size-grid .size-row:not(.header-row)').forEach(function(row) {
+    var ydsInput = row.querySelector('.yds-label');
+    if (ydsInput && ydsInput.value) {
+      var yv = parseFloat(ydsInput.value);
+      if (toM) ydsInput.value = (yv * 0.9144).toFixed(2);
+      else if (toYd) ydsInput.value = (yv / 0.9144).toFixed(2);
     }
   });
   updateCuttable();
 }
-function addSize(name,qty,yds){
-  name=name||'';qty=qty||'';yds=yds||'';
-  var id=++sizeCount;
-  var row=document.createElement('div');
-  row.className='size-row';row.id='sr-'+id;
-  var btn=document.createElement('button');
-  btn.className='btn-icon';btn.title='Remove';btn.innerHTML='&times;';
-  btn.setAttribute('data-id','sr-'+id);
-  btn.addEventListener('click',function(){removeSize(this.getAttribute('data-id'));});
-  var f1=document.createElement('div');f1.className='field';
-  var i1=document.createElement('input');i1.type='text';i1.placeholder='e.g. M';i1.value=name;i1.style.textAlign='center';
+
+function addSize(name, qty, yds) {
+  name = name || ''; qty = qty || ''; yds = yds || '';
+  var id = ++sizeCount;
+  var row = document.createElement('div');
+  row.className = 'size-row'; row.id = 'sr-' + id;
+  var btn = document.createElement('button');
+  btn.className = 'btn-icon'; btn.title = 'Remove'; btn.textContent = '\u00d7';
+  btn.setAttribute('data-id', 'sr-' + id);
+  btn.addEventListener('click', function() { removeSize(this.getAttribute('data-id')); });
+  var f1 = document.createElement('div'); f1.className = 'field';
+  var i1 = document.createElement('input'); i1.type = 'text'; i1.placeholder = 'e.g. M'; i1.value = name; i1.style.textAlign = 'center';
   f1.appendChild(i1);
-  var f2=document.createElement('div');f2.className='field';
-  var i2=document.createElement('input');i2.type='number';i2.placeholder='0';i2.value=qty;i2.min='0';i2.step='1';i2.style.textAlign='right';
+  var f2 = document.createElement('div'); f2.className = 'field';
+  var i2 = document.createElement('input'); i2.type = 'number'; i2.placeholder = '0'; i2.value = qty; i2.min = '0'; i2.step = '1'; i2.style.textAlign = 'right';
   f2.appendChild(i2);
-  var f3=document.createElement('div');f3.className='field';
-  var i3=document.createElement('input');i3.type='number';i3.placeholder='1.75';i3.value=yds;i3.min='0';i3.step='0.05';i3.className='yds-label';i3.style.textAlign='right';
+  var f3 = document.createElement('div'); f3.className = 'field';
+  var i3 = document.createElement('input'); i3.type = 'number'; i3.placeholder = '1.75'; i3.value = yds; i3.min = '0'; i3.step = '0.05'; i3.className = 'yds-label'; i3.style.textAlign = 'right';
   f3.appendChild(i3);
-  row.appendChild(f1);row.appendChild(f2);row.appendChild(f3);row.appendChild(btn);
+  row.appendChild(f1); row.appendChild(f2); row.appendChild(f3); row.appendChild(btn);
   document.getElementById('size-grid').appendChild(row);
 }
-function removeSize(id){var el=document.getElementById(id);if(el)el.remove();}
-function updateWaste(v){document.getElementById('waste-val').textContent=v+'%';}
-function calculate(){
-  var price=parseFloat(document.getElementById('price').value);
-  var waste=parseFloat(document.getElementById('waste').value)/100;
-  if(isNaN(price)||price<=0){
+
+function removeSize(id) { var el = document.getElementById(id); if (el) el.remove(); }
+
+function updateWaste(v) { document.getElementById('waste-val').textContent = v + '%'; }
+
+function calculate() {
+  var price = parseFloat(document.getElementById('price').value);
+  var waste = parseFloat(document.getElementById('waste').value) / 100;
+  if (isNaN(price) || price <= 0) {
     document.getElementById('price').classList.add('error');
-    document.getElementById('price').focus();return;
+    document.getElementById('price').focus(); return;
   }
   document.getElementById('price').classList.remove('error');
-  var rows=document.querySelectorAll('#size-grid .size-row:not(.header-row)');
-  if(!rows.length){alert('Add at least one size.');return;}
-  var tableHTML='',grandYds=0,grandCost=0;
-  rows.forEach(function(row){
-    var inputs=row.querySelectorAll('input');
-    var sizeName=inputs[0].value.trim()||'\u2014';
-    var qty=parseFloat(inputs[1].value)||0;
-    var yds=parseFloat(inputs[2].value)||0;
-    var subYds=qty*yds,subCost=subYds*price;
-    grandYds+=subYds;grandCost+=subCost;
-    var u=unit==='yd'?'yd':'m';
-    tableHTML+='<tr><td>'+sizeName+'</td><td>'+qty+'</td><td>'+yds.toFixed(2)+' '+u+'</td><td>'+subYds.toFixed(2)+' '+u+'</td><td>$'+subCost.toFixed(2)+'</td></tr>';
+  var rows = document.querySelectorAll('#size-grid .size-row:not(.header-row)');
+  if (!rows.length) { alert('Add at least one size.'); return; }
+  var tableHTML = '', grandYds = 0, grandCost = 0;
+  rows.forEach(function(row) {
+    var inputs = row.querySelectorAll('input');
+    var sizeName = inputs[0].value.trim() || '--';
+    var qty = parseFloat(inputs[1].value) || 0;
+    var yds = parseFloat(inputs[2].value) || 0;
+    var subYds = qty * yds, subCost = subYds * price;
+    grandYds += subYds; grandCost += subCost;
+    var u = unit === 'yd' ? 'yd' : 'm';
+    tableHTML += '<tr><td>' + sizeName + '</td><td>' + qty + '</td><td>' + yds.toFixed(2) + ' ' + u + '</td><td>' + subYds.toFixed(2) + ' ' + u + '</td><td>$' + subCost.toFixed(2) + '</td></tr>';
   });
-  var wYds=grandYds*waste,wCost=wYds*price;
-  var tYds=grandYds+wYds,tCost=grandCost+wCost;
-  var uL=unit==='yd'?'yds':'mtrs';
-  var wv=document.getElementById('waste-val').textContent;
-  document.getElementById('res-body').innerHTML=tableHTML;
-  document.getElementById('res-total').textContent=tYds.toFixed(2)+' '+uL;
-  document.getElementById('res-grand').textContent='$'+tCost.toFixed(2);
-  document.getElementById('waste-note').textContent='Includes '+wv+' waste/shrinkage: +'+wYds.toFixed(2)+' '+uL+' (+$'+wCost.toFixed(2)+')';
-  document.getElementById('col-yds-unit').textContent=(unit==='yd'?'Yds':'Mtrs')+'/unit';
-  document.getElementById('col-subtotal').textContent='Subtotal '+(unit==='yd'?'Yds':'Mtrs');
+  var wYds = grandYds * waste, wCost = wYds * price;
+  var tYds = grandYds + wYds, tCost = grandCost + wCost;
+  var uL = unit === 'yd' ? 'yds' : 'mtrs';
+  var wv = document.getElementById('waste-val').textContent;
+  document.getElementById('res-body').innerHTML = tableHTML;
+  document.getElementById('res-total').textContent = tYds.toFixed(2) + ' ' + uL;
+  document.getElementById('res-grand').textContent = '$' + tCost.toFixed(2);
+  document.getElementById('waste-note').textContent = 'Includes ' + wv + ' waste/shrinkage: +' + wYds.toFixed(2) + ' ' + uL + ' (+$' + wCost.toFixed(2) + ')';
+  document.getElementById('col-yds-unit').textContent = (unit === 'yd' ? 'Yds' : 'Mtrs') + '/unit';
+  document.getElementById('col-subtotal').textContent = 'Subtotal ' + (unit === 'yd' ? 'Yds' : 'Mtrs');
   document.getElementById('results').classList.add('visible');
-  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'nearest'});
-  document.getElementById('btn-print').disabled=false;
+  document.getElementById('results').scrollIntoView({behavior:'smooth', block:'nearest'});
+  document.getElementById('btn-print').disabled = false;
 }
-function printResults(){
-  var now=new Date();
-  var ts=now.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})+' \u00b7 '+now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-  document.getElementById('print-timestamp').textContent='Generated: '+ts;
+
+function printResults() {
+  var now = new Date();
+  var ts = now.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'}) + ' \u00b7 ' + now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+  document.getElementById('print-timestamp').textContent = 'Generated: ' + ts;
   window.print();
 }
-function reset(){
+
+function reset() {
   setUnit('yd');
-  document.getElementById('price').value='';
+  document.getElementById('price').value = '';
   document.getElementById('price').classList.remove('error');
-  document.getElementById('width').value='';
-  document.getElementById('selvedge').value=2;
-  document.getElementById('cuttable-row').style.display='none';
-  document.getElementById('waste').value=5;
-  document.getElementById('waste-val').textContent='5%';
-  document.querySelectorAll('#size-grid .size-row:not(.header-row)').forEach(function(r){r.remove();});
-  sizeCount=0;
-  defaultSizes.forEach(function(s){addSize(s.name,s.qty,s.yds);});
+  document.getElementById('width').value = '60';
+  document.getElementById('selvedge').value = '2';
+  document.getElementById('waste').value = 5;
+  document.getElementById('waste-val').textContent = '5%';
+  document.querySelectorAll('#size-grid .size-row:not(.header-row)').forEach(function(r) { r.remove(); });
+  sizeCount = 0;
+  defaultSizes.forEach(function(s) { addSize(s.name, s.qty, s.yds); });
   document.getElementById('results').classList.remove('visible');
-  document.getElementById('btn-print').disabled=true;
-  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('btn-print').disabled = true;
+  updateCuttable();
+  window.scrollTo({top:0, behavior:'smooth'});
 }
-document.addEventListener('DOMContentLoaded',function(){
-  defaultSizes.forEach(function(s){addSize(s.name,s.qty,s.yds);});
+
+document.addEventListener('DOMContentLoaded', function() {
+  defaultSizes.forEach(function(s) { addSize(s.name, s.qty, s.yds); });
+  updateCuttable();
 });
 </script>
 </body>
