@@ -1,0 +1,31 @@
+# Green Neurons Design + Development
+
+> Technical design and development studio. Fort Worth, TX.
+> Founded by Jenny Siede. Legal entity: Green Neurons Design and Technologies PBC (est. August 11, 2021), operating under Quinne LLC.
+
+## What we do
+
+We build technical infrastructure for apparel production and wearable technology — spanning fabric simulation, bill of materials tooling, production data systems, and clinical data integration for wearable health devices.
+
+## Key projects
+
+- **Neurowēv™** — Fabric simulation framework and fabric ontology for apparel technical design. Includes a schema-driven classification system for fabric physical properties, garment suitability, and e-textile compatibility.
+- **M.Ai.D.E™** — Design intelligence framework connecting fabric data to production decisions.
+- **Material Costing Calculator** — Standalone apparel costing tool. Supports yards/meters, dynamic size runs, waste/shrinkage allowance, selvedge deduction. Free to use.
+- **Fields Pilot** — Clinical data infrastructure project with Dr. Jerel Adam Fields (UCSD Psychiatry). Integrates Neurowēv™ and Bubot™ for HIV/neurodegeneration research data collection.
+
+## Core pages
+
+- [Home](https://greenneurons.us): Studio overview
+- [Material Costing Calculator](https://greenneurons.us/material_costing.html): Free apparel fabric costing tool
+- [Design Signals Quick Bake](https://greenneurons.substack.com): Publication on apparel production, technical design, and tooling
+
+## Domain expertise
+
+Apparel production: CMT, BOM, marker efficiency, selvedge, size runs, fabric ontology.
+Technology: Software engineering (Java, Python, React), MCP infrastructure, wearable tech, clinical data systems.
+
+## Collaborators
+
+- Jason Callina — CTO collaborator. Builder of Bubot™. Manufacturing revival focus. (Fall River, MA)
+- Dr. Jerel Adam Fields — Associate Adjunct Professor of Psychiatry, UCSD. HIV/neurodegeneration research.
