@@ -21,5 +21,8 @@ node_modules/
 # Tracker fetch log (local only)
 tracker-data/fetch_log.txt
 
+# Claude worktrees — causes Cloudflare submodule errors
+.claude/
+
 # vault/ is intentionally committed — docs travel with the code
 # private repo, no exposure risk
