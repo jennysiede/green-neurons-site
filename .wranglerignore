@@ -1,0 +1,29 @@
+# .wranglerignore — prevent internal files from being uploaded as web assets
+
+# Git internals
+.git/
+.gitignore
+.gitattributes
+
+# Claude
+.claude/
+
+# Vault — internal business docs, not for public serving
+vault/
+
+# Dev tooling
+.vscode/
+tracker-dev/
+commit.ps1
+commit.bat
+commit.sh
+
+# Python scripts — server-side only
+tracker_fetch.py
+tracker_update.py
+tracker_fetch_and_deploy.bat
+tracker_update.bat
+
+# Wrangler internals
+.wrangler/
+wrangler.jsonc
