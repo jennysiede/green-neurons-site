@@ -280,6 +280,60 @@
     }
     .cap-card:hover::after { width: 100%; }
     .cap-card:hover { background: var(--accent-light); }
+
+    /* ── CTA card — navy variant ── */
+    .cap-card-cta {
+      background: var(--navy);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-top: 2px solid var(--accent);
+    }
+    .cap-card-cta::after { display: none; }
+    .cta-card-eyebrow {
+      font-family: var(--mono);
+      font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--navy-muted);
+      margin-bottom: 20px;
+    }
+    .cta-card-heading {
+      font-family: var(--serif);
+      font-size: 1.5rem; font-weight: 400;
+      color: var(--text-inv);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .cta-card-heading em {
+      font-style: italic;
+      color: var(--accent-mid);
+    }
+    .cta-card-sub {
+      font-size: 0.85rem; font-weight: 300;
+      color: var(--navy-muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .btn-cta-card {
+      display: inline-block;
+      padding: 11px 24px;
+      background: var(--accent);
+      color: var(--text-inv);
+      font-family: var(--sans);
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      align-self: flex-start;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-cta-card:hover {
+      background: var(--accent-mid);
+      transform: translateY(-1px);
+    }
     .cap-num {
       font-family: var(--mono);
       font-size: 10px; letter-spacing: 0.16em;
@@ -1077,10 +1131,16 @@
       <div class="cap-card reveal">
         <div class="cap-num">05 ——</div>
         <div class="cap-title">AI-Assisted Development Workflows</div>
-        <p class="cap-desc">Applying AI reasoning layers to design and production decisions — reducing iteration cycles, surfacing constraints earlier, and supporting data-informed development for brands and research partners.</p>
+        <p class="cap-desc">Applying AI reasoning layers to inform design and production decisions — reducing iteration cycles, surfacing constraints earlier, and supporting data-informed development for brands and research partners.</p>
         <div class="cap-tags">
           <span class="tag">AI Workflows</span><span class="tag">Decision Support</span><span class="tag">Infrastructure</span>
         </div>
+      </div>
+      <div class="cap-card-cta reveal">
+        <div class="cta-card-eyebrow">Ready to build something?</div>
+        <div class="cta-card-heading">Let's start<br><em>a project.</em></div>
+        <p class="cta-card-sub">Tell us what you're working on — we'll help you figure out where to begin.</p>
+        <a href="#contact" class="btn-cta-card">Start a Conversation</a>
       </div>
     </div>
   </div>
