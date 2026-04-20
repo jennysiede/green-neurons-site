@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { TechPack, StyleHeader, Colorway, BomRow, PomRow, BomType, BomUnit } from '../types';
+import { TechPack, StyleHeader, Colorway, BomRow, PomRow } from '../types';
 
 const defaultHeader: StyleHeader = {
   label: '', styleNumber: '', season: '', date: new Date().toISOString().split('T')[0],
