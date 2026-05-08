@@ -201,6 +201,8 @@ var defaultSizes = [
   {name:'L',  qty:12, yds:2.0}
 ];
 
+var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
 function updateCuttable() {
   var w = parseFloat(document.getElementById('width').value);
   var s = parseFloat(document.getElementById('selvedge').value) || 0;
@@ -311,8 +313,11 @@ function calculate() {
 function printResults() {
   var now = new Date();
   var tzShort = now.toLocaleTimeString('en-US', {timeZoneName:'short'}).split(' ').pop();
-  var date = now.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
-  var time = now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+  var date = MONTHS[now.getMonth()] + ' ' + now.getDate() + ' ' + now.getFullYear();
+  var h = now.getHours(), m = now.getMinutes();
+  var ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  var time = h + ':' + (m < 10 ? '0' : '') + m + ' ' + ampm;
   document.getElementById('print-timestamp').textContent = 'Generated: ' + date + ' ' + time + ' ' + tzShort;
   window.print();
 }
