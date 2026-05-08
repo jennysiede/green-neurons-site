@@ -8,11 +8,21 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--cream:#f5f1eb;--navy:#1a2535;--slate:#3d5a80;--ink:#2c2c2c;--muted:#8a8070;--border:#ddd8ce;--error:#b85450;--font-display:'Playfair Display',Georgia,serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace}
-body{background:var(--cream);color:var(--ink);font-family:var(--font-body);font-size:14px;line-height:1.6;padding:32px 24px 48px;max-width:680px;margin:0 auto}
+body{background:var(--cream);color:var(--ink);font-family:var(--font-body);font-size:14px;line-height:1.6;padding:0 0 48px;max-width:680px;margin:0 auto}
+/* ── Top nav ── */
+.site-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);margin-bottom:32px}
+.site-nav a.home{font-family:var(--font-mono);font-size:9px;letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.site-nav a.home:hover{color:var(--slate)}
+.site-nav ul{list-style:none;display:flex;gap:20px}
+.site-nav ul a{font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.site-nav ul a:hover{color:var(--slate)}
+/* ── Page content ── */
+.content{padding:0 24px}
 header{border-bottom:1px solid var(--navy);padding-bottom:16px;margin-bottom:32px;display:flex;align-items:baseline;gap:12px}
 header h1{font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--navy);letter-spacing:-0.02em}
-header a{font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;text-decoration:none}
+header span{font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase}
 .label{font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.disclaimer{font-family:var(--font-mono);font-size:9px;letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
 .row{display:grid;gap:16px;margin-bottom:20px}
 .row-4{grid-template-columns:1fr 1fr 1fr 1fr}
 .field{display:flex;flex-direction:column}
@@ -76,15 +86,23 @@ footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--border);font-
 .footer-links a:hover{color:var(--slate)}
 .footer-right{color:var(--muted);white-space:nowrap;align-self:flex-end}
 .print-timestamp{display:none;font-size:9px;color:var(--muted);margin-top:4px}
-@media(max-width:480px){.row-4{grid-template-columns:1fr 1fr}.size-row{grid-template-columns:70px 1fr 1fr auto;gap:6px}.btn-row{grid-template-columns:1fr auto}.btn-print{display:none}}
-@media print{body{background:white;padding:20px;font-size:12px}.btn-row,.btn-add,.btn-icon,.toggle-group,.waste-row input[type="range"],.currency-badge{display:none!important}.results{display:block!important;border:none}.results-header{background:#1a2535!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}footer{margin-top:24px}.print-timestamp{display:block!important}}
+@media(max-width:480px){.row-4{grid-template-columns:1fr 1fr}.size-row{grid-template-columns:70px 1fr 1fr auto;gap:6px}.btn-row{grid-template-columns:1fr auto}.btn-print{display:none}.site-nav ul{gap:12px}}
+@media print{.site-nav{display:none!important}body{background:white;padding:20px;font-size:12px}.btn-row,.btn-add,.btn-icon,.toggle-group,.waste-row input[type="range"],.currency-badge,.disclaimer{display:none!important}.results{display:block!important;border:none}.results-header{background:#1a2535!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}footer{margin-top:24px}.print-timestamp{display:block!important}}
 </style>
 </head>
 <body>
+<nav class="site-nav">
+  <a href="https://greenneurons.us" class="home">&larr; Back</a>
+  <ul>
+    <li><a href="https://greenneurons.us/terms.html">Terms of Use</a></li>
+  </ul>
+</nav>
+<div class="content">
 <header>
   <h1>Material Costing</h1>
-  <a href="https://greenneurons.us" target="_blank">Green Neurons Design + Development</a>
+  <span>Green Neurons Design + Development</span>
 </header>
+<div class="disclaimer">For general use only &middot; No technical support provided &middot; Verify all figures with your manufacturer</div>
 <div class="currency-badge">Currency in use: <strong>USD ($)</strong> &nbsp;&middot;&nbsp; Neurow&#275;v&#x2122; Framework</div>
 <div class="label">Configuration</div>
 <div class="row row-4">
@@ -172,6 +190,7 @@ footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--border);font-
   </div>
   <span class="footer-right">Neurow&#275;v&#x2122; Framework</span>
 </footer>
+</div>
 <script>
 var unit = 'yd';
 var sizeCount = 0;
