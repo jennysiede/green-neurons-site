@@ -75,6 +75,43 @@ jenny@jennysiede.com
 
 ---
 
+## Business Terms & Practices
+
+**Legal entity structure:**
+- **Legal name:** Green Neurons Design and Technologies PBC (public benefit corporation)
+- **DBA (trade name):** Green Neurons Design + Development
+- **Usage:** Client-facing materials use the DBA. Legal documents (invoices, contracts, footer notices) reference the PBC entity.
+
+**Payment philosophy:**
+We are a small business working with partners who sometimes have large procurement bureaucracies. Our payment terms are strict because they need to be. Reputation matters, but so does cash flow. We are not a free storage facility, and we are not a bank.
+
+**Standard invoice terms (QuickBooks memo, 1000-character limit):**
+
+```
+PAYMENT TERMS: Due on receipt. Late fees of 4.99% accrue 7 days after due date. Accounts 60+ days overdue referred to legal counsel and court.
+
+CONTRACT: Proforma/Proposal constitutes binding agreement. No chargebacks, reversals, or deductions without documented cause and notarized written consent from both parties. Unauthorized chargebacks constitute breach of contract. All invoices must be paid in full prior to shipment or release of deliverables.
+
+DISPUTES: Must be raised within 7 business days to hello@greenneurons.us AND text 469-340-3558. Two forms of communication required. Deliveries deemed accepted if no written notice within 7 days.
+
+MATERIALS: Remnant materials or digital files disposed after 60 days without explicit instructions. Refer to terms/policy given at engagement for respectful project handling.
+```
+
+**Invoice footer:**
+
+```
+Thank you for supporting Green Neurons Design and Technologies PBC. All rights reserved.
+```
+
+**Why these terms:**
+- **Dual-channel dispute requirement:** Eliminates "I never got your email" excuses
+- **Notarized consent for chargebacks:** Makes unauthorized reversals legally indefensible
+- **60-day materials disposal:** We are not a storage service; clients must provide pickup/archive instructions
+- **7-day grace on late fees:** Acknowledges payment processing delays without penalizing good-faith clients
+- **60-day escalation to legal:** Clear threshold before collections action
+
+---
+
 ## What This File Is For
 
 This is the source of truth for how Green Neurons sounds, presents, and makes decisions about communication. It is a living document. When a piece of writing feels off, come back here first.
