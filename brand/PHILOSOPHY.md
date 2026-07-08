@@ -1,5 +1,5 @@
 # Green Neurons — Brand Philosophy
-*Last updated: May 2026*
+*Last updated: June 2026*
 
 ---
 
@@ -88,13 +88,13 @@ We are a small business working with partners who sometimes have large procureme
 **Standard invoice terms (QuickBooks memo, 1000-character limit):**
 
 ```
-PAYMENT TERMS: Due on receipt. Late fees of 4.99% accrue 7 days after due date. Accounts 60+ days overdue referred to legal counsel and court.
+PAYMENT TERMS: Due on receipt. Invoices remaining unpaid after 14 days are considered overdue and may become subject to a 4.99% monthly late fee. Accounts 60+ days past due may be referred to legal counsel for collection.
 
-CONTRACT: Proforma/Proposal constitutes binding agreement. No chargebacks, reversals, or deductions without documented cause and notarized written consent from both parties. Unauthorized chargebacks constitute breach of contract. All invoices must be paid in full prior to shipment or release of deliverables.
+CONTRACT: Proposal/Proforma constitutes the governing agreement. No chargebacks, reversals, or deductions without documented cause and notarized written consent from both parties. Unauthorized chargebacks constitute breach of contract. Payment in full required before shipment or release of deliverables.
 
-DISPUTES: Must be raised within 7 business days to hello@greenneurons.us AND text 469-340-3558. Two forms of communication required. Deliveries deemed accepted if no written notice within 7 days.
+DISPUTES: Invoice disputes must be submitted within 7 business days to hello@greenneurons.us and by text to 469-340-3558. Both notifications are required. Deliverables are deemed accepted if no written notice is received within 7 business days.
 
-MATERIALS: Remnant materials or digital files disposed after 60 days without explicit instructions. Refer to terms/policy given at engagement for respectful project handling.
+MATERIALS: Remnant materials and digital files may be disposed of after 60 days unless other arrangements are made in writing. See engagement terms for project handling.
 ```
 
 **Invoice footer:**
@@ -107,7 +107,7 @@ Thank you for supporting Green Neurons Design and Technologies PBC. All rights r
 - **Dual-channel dispute requirement:** Eliminates "I never got your email" excuses
 - **Notarized consent for chargebacks:** Makes unauthorized reversals legally indefensible
 - **60-day materials disposal:** We are not a storage service; clients must provide pickup/archive instructions
-- **7-day grace on late fees:** Acknowledges payment processing delays without penalizing good-faith clients
+- **14-day grace on late fees:** Acknowledges payment processing delays without penalizing good-faith clients
 - **60-day escalation to legal:** Clear threshold before collections action
 
 ---
