@@ -1,5 +1,5 @@
 {
-  "last_reviewed": "2026-04-05",
+  "last_reviewed": "2026-07-13",
   "alerts": [
     {
       "id": "canada-border",
@@ -21,5 +21,5 @@
     }
   ],
   "notes": "Auto-updated by tracker_fetch.py. Manual alerts are preserved. Edit active:false to suppress any alert.",
-  "last_fetch": "2026-04-05 11:29"
+  "last_fetch": "2026-07-13 12:56"
 }
