@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Sketch to Shipped</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --ink:#2b2621;
+    --sub:#6b6259;
+    --line:#e7dfd3;
+    --p1:#5b84a6; /* dream it - blue */
+    --p2:#c1502e; /* prove it - terracotta */
+    --p3:#c1943d; /* lock it - gold */
+    --p4:#6f8a63; /* source it - sage */
+    --p5:#3c4654; /* make & ship - charcoal navy */
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    padding:36px 24px 60px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;}
+  header{text-align:center;margin-bottom:28px;}
+  h1{
+    font-size:2.1rem;
+    letter-spacing:-0.02em;
+    margin:0 0 6px;
+    font-weight:700;
+  }
+  .tagline{color:var(--sub);font-size:1rem;margin:0 0 4px;}
+  .stat{
+    display:inline-block;margin-top:12px;font-size:0.85rem;color:var(--sub);
+    border:1px solid var(--line);border-radius:999px;padding:6px 16px;
+    background:var(--card);
+  }
+  nav{
+    display:flex;justify-content:center;gap:8px;margin:28px 0 32px;
+    flex-wrap:wrap;
+  }
+  nav button{
+    font-family:inherit;font-size:0.9rem;font-weight:600;
+    padding:10px 18px;border-radius:10px;border:1px solid var(--line);
+    background:var(--card);color:var(--sub);cursor:pointer;
+    transition:all .15s ease;
+  }
+  nav button:hover{border-color:var(--ink);color:var(--ink);}
+  nav button.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+  .panel{display:none;}
+  .panel.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  /* ---- 5 phase view ---- */
+  .flow5{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;justify-content:center;}
+  .p-card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;width:190px;position:relative;
+    box-shadow:0 1px 2px rgba(0,0,0,.03);
+  }
+  .p-card .dot{width:10px;height:10px;border-radius:50%;margin-bottom:10px;}
+  .p-card h3{margin:0 0 6px;font-size:1.05rem;}
+  .p-card p{margin:0;font-size:0.85rem;color:var(--sub);line-height:1.4;}
+  .p-card .range{font-size:0.72rem;color:var(--sub);margin-top:10px;opacity:.7;}
+  .arrow{
+    display:flex;align-items:center;justify-content:center;
+    color:var(--line);font-size:1.4rem;width:34px;flex-shrink:0;
+  }
+
+  /* ---- 12 stage view ---- */
+  .stage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+  .s-card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:16px;border-left:5px solid var(--phase);
+  }
+  .s-card .num{font-size:0.72rem;font-weight:700;color:var(--phase);letter-spacing:.04em;text-transform:uppercase;}
+  .s-card h4{margin:6px 0 6px;font-size:0.98rem;}
+  .s-card p{margin:0;font-size:0.82rem;color:var(--sub);line-height:1.4;}
+  .s-card .steps{font-size:0.72rem;color:var(--sub);margin-top:8px;opacity:.7;}
+
+  .legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;font-size:0.78rem;color:var(--sub);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+  /* ---- mapping table ---- */
+  table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--line);}
+  th,td{text-align:left;padding:10px 14px;font-size:0.85rem;border-bottom:1px solid var(--line);}
+  th{background:#f4efe6;font-size:0.75rem;text-transform:uppercase;letter-spacing:.04em;color:var(--sub);}
+  tr:last-child td{border-bottom:none;}
+  td.range{color:var(--sub);white-space:nowrap;width:90px;}
+  td.phase{white-space:nowrap;width:120px;font-weight:600;}
+
+  .note{max-width:640px;margin:26px auto 0;text-align:center;color:var(--sub);font-size:0.85rem;line-height:1.5;}
+  footer{max-width:640px;margin:40px auto 0;text-align:center;color:var(--sub);font-size:0.68rem;line-height:1.4;opacity:.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Sketch to Shipped</h1>
+    <p class="tagline">Your PLM chart, minus the eye strain.</p>
+    <div class="stat">101 boxes → 20-ish "is this okay?" checkpoints → 1 garment</div>
+  </header>
+
+  <nav>
+    <button class="active" data-panel="p5">The Big Picture (5)</button>
+    <button data-panel="p12">The Real Talk (12)</button>
+    <button data-panel="pmap">Where'd My 101 Steps Go?</button>
+  </nav>
+
+  <!-- 5 PHASE VIEW -->
+  <div class="panel active" id="p5">
+    <div class="flow5">
+
+      <div class="p-card"><div class="dot" style="background:var(--p1)"></div>
+        <h3>Dream It</h3>
+        <p>Fabric show, colors, sketch, materials picked, design gets the nod.</p>
+        <div class="range">steps 1–16</div>
+      </div>
+      <div class="arrow">→</div>
+
+      <div class="p-card"><div class="dot" style="background:var(--p2)"></div>
+        <h3>Prove It</h3>
+        <p>Samples, duplicates, salesman samples, lab dips, costing — round and round until everyone nods yes.</p>
+        <div class="range">steps 17–65</div>
+      </div>
+      <div class="arrow">→</div>
+
+      <div class="p-card"><div class="dot" style="background:var(--p3)"></div>
+        <h3>Lock It</h3>
+        <p>Quantities confirmed, pattern graded to size, payment secured, preproduction sign-off.</p>
+        <div class="range">steps 66–79</div>
+      </div>
+      <div class="arrow">→</div>
+
+      <div class="p-card"><div class="dot" style="background:var(--p4)"></div>
+        <h3>Source It</h3>
+        <p>Bulk fabric and trim ordered, arrive, get inspected.</p>
+        <div class="range">steps 80–86</div>
+      </div>
+      <div class="arrow">→</div>
+
+      <div class="p-card"><div class="dot" style="background:var(--p5)"></div>
+        <h3>Make &amp; Ship</h3>
+        <p>Cut, sew, finish, press, pack, inspect, paperwork, out the door.</p>
+        <div class="range">steps 87–101</div>
+      </div>
+
+    </div>
+    <p class="note">This is the whole chart, just standing further back. Notice "Prove It" is almost half the process — that's not a design flaw, that's just how many times a sample has to prove itself before real fabric gets cut.</p>
+  </div>
+
+  <!-- 12 STAGE VIEW -->
+  <div class="panel" id="p12">
+    <div class="legend">
+      <span><i style="background:var(--p1)"></i>Dream It</span>
+      <span><i style="background:var(--p2)"></i>Prove It</span>
+      <span><i style="background:var(--p3)"></i>Lock It</span>
+      <span><i style="background:var(--p4)"></i>Source It</span>
+      <span><i style="background:var(--p5)"></i>Make &amp; Ship</span>
+    </div>
+    <div class="stage-grid">
+
+      <div class="s-card" style="--phase:var(--p1)"><div class="num">Stage 1</div><h4>Trend &amp; Concept</h4><p>Designer hits the fabric show, color and design direction come in, design plan begins.</p><div class="steps">steps 1–4</div></div>
+
+      <div class="s-card" style="--phase:var(--p1)"><div class="num">Stage 2</div><h4>Materials &amp; First Sketch</h4><p>Trim and fabric selected, first sketch drawn, line plan opened, first group review.</p><div class="steps">steps 5–9</div></div>
+
+      <div class="s-card" style="--phase:var(--p1)"><div class="num">Stage 3</div><h4>Greenlit → First Sample</h4><p>Design okayed, spec &amp; tech sheets written, pattern cut, first sample sewn, checked, okayed.</p><div class="steps">steps 10–16</div></div>
+
+      <div class="s-card" style="--phase:var(--p2)"><div class="num">Stage 4</div><h4>Info Exchange &amp; Patterns</h4><p>Customer and factory trade specs and patterns back and forth until the pattern checks out.</p><div class="steps">steps 17–27</div></div>
+
+      <div class="s-card" style="--phase:var(--p2)"><div class="num">Stage 5</div><h4>Trim &amp; Fabric Dialed In</h4><p>Sample trim and sample fabric ordered, dyed, received, checked okay.</p><div class="steps">steps 28–37</div></div>
+
+      <div class="s-card" style="--phase:var(--p2)"><div class="num">Stage 6</div><h4>Duplicate Built &amp; Sent</h4><p>Duplicate garment cut, sewn, checked, shipped to the customer.</p><div class="steps">steps 38–42</div></div>
+
+      <div class="s-card" style="--phase:var(--p2)"><div class="num">Stage 7</div><h4>Costing Crunched</h4><p>Overhead, labor, trim, and fabric costs add up; customer agrees on price (or sends corrections).</p><div class="steps">steps 43–50</div></div>
+
+      <div class="s-card" style="--phase:var(--p2)"><div class="num">Stage 8</div><h4>Salesman Sample Sprint</h4><p>Lab dips, trim, and fabric ordered → salesman sample cut, sewn, checked, shipped.</p><div class="steps">steps 51–65</div></div>
+
+      <div class="s-card" style="--phase:var(--p3)"><div class="num">Stage 9</div><h4>Order Locked &amp; Financed</h4><p>Color/size breakdowns in, final fit correction, pattern graded, letter of credit opened and cleared.</p><div class="steps">steps 66–75</div></div>
+
+      <div class="s-card" style="--phase:var(--p3)"><div class="num">Stage 10</div><h4>Preproduction Sign-off</h4><p>One more duplicate — cut, sewn, checked — then the final assortment is confirmed.</p><div class="steps">steps 76–79</div></div>
+
+      <div class="s-card" style="--phase:var(--p4)"><div class="num">Stage 11</div><h4>Bulk Materials Sourced</h4><p>Production order issued; stock fabric and trim ordered, received, checked.</p><div class="steps">steps 80–86</div></div>
+
+      <div class="s-card" style="--phase:var(--p5)"><div class="num">Stage 12</div><h4>Cut, Make &amp; Ship</h4><p>Cut, sort, sew, finish, press, pack, inspect — then quota, licensing, paperwork, and it ships.</p><div class="steps">steps 87–101</div></div>
+
+    </div>
+  </div>
+
+  <!-- MAPPING VIEW -->
+  <div class="panel" id="pmap">
+    <table>
+      <thead><tr><th>Original steps</th><th>Stage</th><th>Phase</th></tr></thead>
+      <tbody>
+        <tr><td class="range">1–4</td><td>Trend &amp; Concept</td><td class="phase" style="color:var(--p1)">Dream It</td></tr>
+        <tr><td class="range">5–9</td><td>Materials &amp; First Sketch</td><td class="phase" style="color:var(--p1)">Dream It</td></tr>
+        <tr><td class="range">10–16</td><td>Greenlit → First Sample</td><td class="phase" style="color:var(--p1)">Dream It</td></tr>
+        <tr><td class="range">17–27</td><td>Info Exchange &amp; Patterns</td><td class="phase" style="color:var(--p2)">Prove It</td></tr>
+        <tr><td class="range">28–37</td><td>Trim &amp; Fabric Dialed In</td><td class="phase" style="color:var(--p2)">Prove It</td></tr>
+        <tr><td class="range">38–42</td><td>Duplicate Built &amp; Sent</td><td class="phase" style="color:var(--p2)">Prove It</td></tr>
+        <tr><td class="range">43–50</td><td>Costing Crunched</td><td class="phase" style="color:var(--p2)">Prove It</td></tr>
+        <tr><td class="range">51–65</td><td>Salesman Sample Sprint</td><td class="phase" style="color:var(--p2)">Prove It</td></tr>
+        <tr><td class="range">66–75</td><td>Order Locked &amp; Financed</td><td class="phase" style="color:var(--p3)">Lock It</td></tr>
+        <tr><td class="range">76–79</td><td>Preproduction Sign-off</td><td class="phase" style="color:var(--p3)">Lock It</td></tr>
+        <tr><td class="range">80–86</td><td>Bulk Materials Sourced</td><td class="phase" style="color:var(--p4)">Source It</td></tr>
+        <tr><td class="range">87–101</td><td>Cut, Make &amp; Ship</td><td class="phase" style="color:var(--p5)">Make &amp; Ship</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Every single one of the 101 boxes on your original chart lives in one of these 12 rows — nothing got cut, just folded up.</p>
+  </div>
+
+</div>
+
+<footer>Built for workshop presentations — a simplified illustration, not a warranted or guaranteed process. Use at your own discretion.</footer>
+
+<script>
+  document.querySelectorAll('nav button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.panel).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
