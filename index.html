@@ -794,6 +794,12 @@
     .swatch:hover { filter: brightness(1.07); }
     .swatch-hex { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; }
     .swatch-name { font-family: var(--sans); font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.8; }
+    .swatch-foot { display: flex; flex-direction: column; gap: 2px; }
+    .swatch-tcx { font-family: var(--mono); font-size: 8px; letter-spacing: 0.04em; opacity: 0.62; }
+    .palette-caveat {
+      padding: 8px 16px; background: var(--bg-card); border-top: 1px solid var(--border);
+      font-size: 10px; line-height: 1.5; color: var(--text-muted); font-style: italic;
+    }
     .palette-display-footer {
       padding: 9px 16px; background: var(--bg-alt); border-top: 1px solid var(--border);
       display: flex; justify-content: space-between; align-items: center;
@@ -811,6 +817,7 @@
       margin-top: 14px; padding: 9px 16px; border: 1px solid var(--border);
       border-radius: 3px; background: var(--bg-alt);
       display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 4px 14px;
     }
     .color-trends-meta span { font-family: var(--mono); font-size: 10px; color: var(--text-muted); }
     .color-trends-meta span.highlight { color: var(--accent); }
@@ -1281,19 +1288,21 @@
 
 <div class="rule"></div>
 
-<!-- ── CONTACT ── -->
+<!-- ── COLOR TRENDS ── -->
 <section id="color-trends">
   <div class="container">
     <p class="section-label reveal">Intelligence Tool</p>
-    <h2 class="reveal">Paris Fashion Week<br><em>Color Trends</em></h2>
+    <h2 class="reveal">Runway<br><em>Color Trends</em></h2>
     <p class="section-intro reveal">
-      Runway chromatic intelligence from Paris Fashion Week — three curated palette groups,
-      5 colors each. Click any swatch to copy the hex. Updated each season.
+      Runway chromatic intelligence across the international show calendar — three curated palette groups,
+      5 colors each, extracted from source imagery and attributed to collection.
+      Click any swatch to copy the hex. Updated each season.
     </p>
     <div class="palette-grid reveal" id="palette-grid"></div>
     <div class="palette-display reveal" id="palette-display"></div>
     <div class="color-trends-meta reveal">
-      <span>Season: Spring / Summer 2025 · Paris</span>
+      <span>Season: FW26–SS27 · Paris / Shanghai</span>
+      <span>Last reviewed: 2026-07-25</span>
       <span class="highlight">3 palette groups · 15 colors</span>
     </div>
     <div class="substack-strip reveal">
@@ -1666,14 +1675,35 @@ form.addEventListener('submit', async (e) => {
 /* ═══════════════════════════════════════════════════
    COLOR TRENDS
 ═══════════════════════════════════════════════════ */
+/* COLOR-PALETTES-START
+   Const name PFW_PALETTES is historical — tool retitled to "Runway Color Trends" 2026-07-25.
+   Kept as-is so the four render functions below don't need touching.
+   Source imagery: Balenciaga FW26 Couture · Lanvin Resort 27 · Samuel Guì Yang FW26 RTW (Shanghai) · Jacquemus SS27 RTW
+   TCX values are APPROXIMATE visual references — confirm against a physical TCX book before dyehouse submit. */
 const PFW_PALETTES = [
-  { id:1, theme:'Dissolution', descriptor:'Structural tension between warmth and void', season:'SS25 · Paris',
-    colors:[{hex:'#1C1917',name:'Asphalt Dusk'},{hex:'#78350F',name:'Burnt Sienna'},{hex:'#B45309',name:'Amber Ember'},{hex:'#D4A373',name:'Desert Fog'},{hex:'#FEFCE8',name:'Mineral White'}]},
-  { id:2, theme:'Immersion', descriptor:'Deep-water chromatics, pressure and calm', season:'SS25 · Paris',
-    colors:[{hex:'#0C1445',name:'Abyss'},{hex:'#1E3A8A',name:'Pelagic'},{hex:'#2563EB',name:'Current'},{hex:'#7DD3FC',name:'Surface Break'},{hex:'#E0F2FE',name:'Foam'}]},
-  { id:3, theme:'Residue', descriptor:'Post-industrial softness, memory of pigment', season:'SS25 · Paris',
-    colors:[{hex:'#6B7280',name:'Ash Veil'},{hex:'#9CA3AF',name:'Chalk Drift'},{hex:'#D4AFB9',name:'Soft Blossom'},{hex:'#F3E8FF',name:'Petal Haze'},{hex:'#FAF5FF',name:'Linen Vapor'}]}
+  { id:1, theme:'Rouge Libre', descriptor:'Chroma carried whole-garment, dyed to depth rather than blocked', season:'FW26–R27 · Paris',
+    colors:[
+      {hex:'#CA141E',name:'Signal Vermilion',tcx:'18-1662',src:'Balenciaga FW26 Couture'},
+      {hex:'#A80624',name:'Crimson Depth',tcx:'19-1863',src:'Lanvin Resort 27'},
+      {hex:'#8A0648',name:'Magenta Ground',tcx:'19-2434',src:'Balenciaga FW26 Couture'},
+      {hex:'#E53F90',name:'Fuchsia Haze',tcx:'17-2627',src:'Balenciaga FW26 Couture'},
+      {hex:'#F770BA',name:'Organza Blush',tcx:'15-2718',src:'Balenciaga FW26 Couture'}]},
+  { id:2, theme:'Nature Reload', descriptor:'Unbleached, unfinished — neutral as material honesty', season:'FW26 · Shanghai / Paris',
+    colors:[
+      {hex:'#EFEDEA',name:'Raw Bone',tcx:'11-4300',src:'Lanvin Resort 27'},
+      {hex:'#EBE3DD',name:'Waffle Cream',tcx:'11-0107',src:'Samuel Guì Yang FW26'},
+      {hex:'#D7C9B2',name:'Oat Ground',tcx:'13-0908',src:'Samuel Guì Yang FW26'},
+      {hex:'#C8B79C',name:'Unbleached Linen',tcx:'14-1112',src:'Samuel Guì Yang FW26'},
+      {hex:'#93775A',name:'Earth Bind',tcx:'17-1230',src:'Jacquemus SS27'}]},
+  { id:3, theme:'Marine Springs', descriptor:'Pigment cooled — water, stone, and one sugared green', season:'FW26–SS27 · Shanghai / Paris',
+    colors:[
+      {hex:'#19394C',name:'Ink Indigo',tcx:'19-4326',src:'Samuel Guì Yang FW26'},
+      {hex:'#426F88',name:'Mineral Blue',tcx:'18-4220',src:'Samuel Guì Yang FW26'},
+      {hex:'#679CBB',name:'Faded Chambray',tcx:'16-4132',src:'Samuel Guì Yang FW26'},
+      {hex:'#10726D',name:'Viridian Deep',tcx:'18-5320',src:'Balenciaga FW26 Couture'},
+      {hex:'#A8C5AE',name:'Sugared Mint',tcx:'13-6108',src:'Jacquemus SS27'}]}
 ];
+/* COLOR-PALETTES-END */
 let activePalette = 0;
 function swatchLum(hex){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return(0.299*r+0.587*g+0.114*b)/255;}
 function renderPaletteGrid(){
@@ -1698,13 +1728,19 @@ function renderPaletteDisplay(){
     </div>
     <div class="palette-swatches">
       ${p.colors.map(c=>{const fg=swatchLum(c.hex)>0.5?'#1a1612':'#f5f1eb';return`
-        <div class="swatch" style="background:${c.hex}" onclick="copyHex('${c.hex}',this)">
+        <div class="swatch" style="background:${c.hex}" onclick="copyHex('${c.hex}',this)" title="${c.src||''}">
           <span class="swatch-hex" style="color:${fg}">${c.hex.slice(1).toUpperCase()}</span>
-          <span class="swatch-name" style="color:${fg}">${c.name}</span>
+          <span class="swatch-foot">
+            <span class="swatch-name" style="color:${fg}">${c.name}</span>
+            ${c.tcx?`<span class="swatch-tcx" style="color:${fg}">≈ ${c.tcx} TCX</span>`:''}
+          </span>
         </div>`;}).join('')}
     </div>
+    <div class="palette-caveat">
+      TCX codes are approximate visual references derived from runway imagery under uncontrolled light — not measured standards. Confirm against a physical swatch before dyehouse submit.
+    </div>
     <div class="palette-display-footer">
-      <span class="palette-copy-hint">Click any swatch to copy hex</span>
+      <span class="palette-copy-hint">Click any swatch to copy hex · hover for source collection</span>
       <div class="palette-actions"><button class="palette-action-btn" onclick="exportPaletteCSS()">Export CSS</button></div>
     </div>`;
 }
@@ -1716,7 +1752,8 @@ function copyHex(hex,el){
 }
 function exportPaletteCSS(){
   const p=PFW_PALETTES[activePalette];
-  const css=`:root {\n${p.colors.map(c=>`  --${c.name.toLowerCase().replace(/\s+/g,'-')}: ${c.hex};`).join('\n')}\n}`;
+  const head=`/* ${p.theme} — ${p.season} · Green Neurons Runway Color Trends */\n/* TCX values approximate — confirm against physical swatch. */\n`;
+  const css=head+`:root {\n${p.colors.map(c=>`  --${c.name.toLowerCase().replace(/\s+/g,'-')}: ${c.hex};${c.tcx?` /* ≈ ${c.tcx} TCX · ${c.src||''} */`:''}`).join('\n')}\n}`;
   navigator.clipboard&&navigator.clipboard.writeText(css);
   alert('CSS variables copied!');
 }
