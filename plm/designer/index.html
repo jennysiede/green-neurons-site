@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Designer Collection · Development Workflow</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --ink:#2b2621;
+    --sub:#6b6259;
+    --line:#e7dfd3;
+    --p1:#5b84a6;
+    --p2:#c1502e;
+    --p3:#c1943d;
+    --p4:#6f8a63;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    padding:44px 24px 60px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;}
+
+  header{text-align:center;margin-bottom:20px;}
+  h1{font-size:2.1rem;letter-spacing:-0.02em;margin:0 0 6px;font-weight:700;}
+  .tagline{color:var(--sub);font-size:1rem;margin:0;}
+
+  .site-nav{display:flex;justify-content:center;gap:8px;margin:20px 0 32px;flex-wrap:wrap;}
+  .site-nav a{
+    font-family:inherit;font-size:0.82rem;font-weight:600;text-decoration:none;
+    padding:8px 16px;border-radius:999px;border:1px solid var(--line);
+    background:var(--card);color:var(--sub);transition:all .15s ease;
+  }
+  .site-nav a:hover{border-color:var(--ink);color:var(--ink);}
+  .site-nav a.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+  /* ---- phase row ---- */
+  .flow{display:flex;align-items:stretch;justify-content:center;flex-wrap:wrap;}
+  .p-card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;width:206px;cursor:pointer;text-align:left;
+    font-family:inherit;color:inherit;
+    box-shadow:0 1px 2px rgba(0,0,0,.03);
+    transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  }
+  .p-card:hover{border-color:var(--sub);}
+  .p-card.on{
+    border-color:var(--phase);box-shadow:0 0 0 1px var(--phase),0 3px 10px rgba(0,0,0,.05);
+    transform:translateY(-2px);
+  }
+  .p-card .dot{width:10px;height:10px;border-radius:50%;background:var(--phase);margin-bottom:12px;}
+  .p-card h3{margin:0 0 6px;font-size:1.05rem;letter-spacing:-0.01em;}
+  .p-card p{margin:0;font-size:0.85rem;color:var(--sub);line-height:1.45;}
+  .p-card .meta{font-size:0.72rem;color:var(--sub);margin-top:14px;opacity:.7;}
+  .arrow{display:flex;align-items:center;justify-content:center;color:var(--line);font-size:1.4rem;width:34px;flex-shrink:0;}
+
+  /* ---- drill down ---- */
+  .detail{
+    margin-top:26px;background:var(--card);border:1px solid var(--line);
+    border-left:5px solid var(--phase);border-radius:16px;padding:24px 24px 22px;
+    animation:fade .22s ease;
+  }
+  @keyframes fade{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+  .detail-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:18px;}
+  .detail-head h2{margin:0;font-size:1.2rem;letter-spacing:-0.01em;}
+  .detail-head .who{font-size:0.74rem;color:var(--sub);opacity:.75;margin-left:auto;}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(184px,1fr));gap:12px;}
+  .step{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:13px 14px;}
+  .step .n{font-size:0.66rem;font-weight:700;letter-spacing:.08em;color:var(--phase);}
+  .step h4{margin:6px 0 4px;font-size:0.88rem;letter-spacing:-0.01em;}
+  .step p{margin:0;font-size:0.76rem;color:var(--sub);line-height:1.4;}
+
+  .fan{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px;}
+  .fn{background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--fn);border-radius:12px;padding:12px;}
+  .fn .role{font-size:0.62rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--fn);}
+  .fn h5{margin:6px 0 0;font-size:0.83rem;}
+  .fn p{margin:5px 0 0;font-size:0.72rem;color:var(--sub);line-height:1.38;}
+
+  .gate{
+    margin-top:16px;display:inline-flex;align-items:center;gap:9px;
+    font-size:0.78rem;font-weight:600;color:var(--ink);
+    background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:8px 16px;
+  }
+  .gate i{color:var(--phase);font-style:normal;}
+
+  footer{max-width:640px;margin:44px auto 0;text-align:center;color:var(--sub);font-size:0.68rem;line-height:1.4;opacity:.6;}
+  footer .updated{display:inline-flex;align-items:center;gap:5px;margin-top:6px;opacity:1;color:var(--p2);font-weight:600;}
+  footer .updated svg{width:13px;height:13px;flex-shrink:0;}
+
+  @media (max-width:880px){
+    .arrow{display:none;}
+    .p-card{width:100%;margin-bottom:10px;}
+    .fan{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Designer Collection · Development Workflow</h1>
+    <p class="tagline">Product Lifecycle Management from Concept to Manufacturing.</p>
+  </header>
+
+  <div class="site-nav">
+    <a href="../index.html">Sketch to Shipped</a>
+    <a href="../uniforms/index.html">Uniform Workflow</a>
+    <a href="index.html" class="active">Designer Workflow</a>
+  </div>
+
+  <div class="flow" id="flow"></div>
+  <div id="detail"></div>
+
+</div>
+
+<footer>© Green Neurons Design and Technologies PBC. All rights reserved.<br>Designer collection workflow.<br><span class="updated"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="42"/><rect x="34" y="40" width="30" height="34" rx="2"/><line x1="30" y1="38" x2="68" y2="38"/><circle cx="49" cy="30" r="3"/><line x1="49" y1="33" x2="49" y2="38"/><path d="M64 46 q14 2 14 14 q0 12 -14 14"/><line x1="49" y1="44" x2="49" y2="70"/><line x1="42" y1="52" x2="56" y2="52"/></svg>Freshly pressed — July 26, 2026</span></footer>
+
+<script>
+const PHASES = [
+  {
+    id:'concept', color:'var(--p1)', title:'Concept',
+    blurb:'Season brief, market, and deliverables.',
+    meta:'5 steps · 1 gate',
+    who:'Season Brief · Market · Deliverables',
+    gate:'Gate 1 — Line plan approved, budget released, calendar locked',
+    steps:[
+      {h:'Season Brief',     p:'Collection theme, delivery calendar, market position.'},
+      {h:'Trend & Research', p:'Runway, archive, mood board, color forecast.'},
+      {h:'Market & Price Positioning',p:'Target customer, price tier, competitive set.'},
+      {h:'Budget/Timeline',  p:'Development budget, sample calendar, market dates.'},
+      {h:'Line Plan',        p:'SKU count, category mix, margin target.'}
+    ]
+  },
+  {
+    id:'line', color:'var(--p2)', title:'Line Design',
+    blurb:'Assets, material sourcing, and the line.',
+    meta:'4 steps · 5 categories',
+    who:'Assets · Material Sourcing · The Line',
+    gate:'Gate 2 — Line freeze, range plan approved',
+    steps:[
+      {h:'Silhouettes',       p:'Category → body → style fit.'},
+      {h:'Color & Print',     p:'Seasonal palette → prints → placement.'},
+      {h:'Materials & Trims', p:'Weight → width → hand → wash + care → buttons + labels + hangtags.'},
+      {h:'Size Range',        p:'Straight / Petite / Plus, XXS–3XL.'}
+    ],
+    fan:[
+      {role:'a · Outerwear',  h:'Coats + Jackets',    p:'Highest cost, longest lead time.', c:'var(--p1)'},
+      {role:'b · Dresses',    h:'Day + Evening',      p:'Statement pieces, editorial pull.',c:'var(--p2)'},
+      {role:'c · Tops',       h:'Blouses + Knitwear', p:'Volume drivers, repeat bodies.',   c:'var(--p3)'},
+      {role:'d · Bottoms',    h:'Pants + Skirts',     p:'Fit-critical, block-dependent.',   c:'var(--p4)'},
+      {role:'e · Accessories',h:'Scarves + Bags',     p:'Margin support, low MOQ.',         c:'#3c4654'}
+    ]
+  },
+  {
+    id:'tech', color:'var(--p3)', title:'Technical Design',
+    blurb:'Technical flats, swatch approval, and fit specs.',
+    meta:'8 steps · full range',
+    who:'Technical Flats · Swatch Approval · Fit Specs',
+    gate:'Gate 3 — SMS approved, ready for market',
+    steps:[
+      {h:'Tech Packs',      p:'Flats, POM chart, construction callouts.'},
+      {h:'Swatch Review',   p:'Vendor swatches matched to palette, PMS approximation.'},
+      {h:'Vendor Confirmation',p:'Stock confirmed, MOQ, lead time.'},
+      {h:'Sample Yardages & Performance Test',p:'Pilling, colorfastness, shrinkage.'},
+      {h:'Patterns',        p:'Develop styles, Optitex/CLO-3D, fit simulation.'},
+      {h:'Proto Samples & Fit Review',p:'Fit sessions on fit model.'},
+      {h:'Grading',         p:'XXS–3XL across three main fit blocks.'},
+      {h:'Sales Samples (SMS)',p:'Showroom set for market appointments.'}
+    ]
+  },
+  {
+    id:'cost', color:'var(--p4)', title:'Costing',
+    blurb:'Vendors, factories, and quantities.',
+    meta:'6 steps · 3–4 factories',
+    who:'Vendors · Factories · Quantities',
+    gate:'Gate 4 — Margin approved, buy sheet locked',
+    steps:[
+      {h:'RFQ Out to Factories',p:'Tech packs and cut tickets to factories.'},
+      {h:'BOM Costing',    p:'Yield, trim, thread, packaging.'},
+      {h:'CMT + Finishing',p:'Make cost plus wash and finish.'},
+      {h:'MOQ Check',      p:'Styles × sizes × colorways vs minimums.'},
+      {h:'Landed Cost & Margin',p:'Duty, freight, target margin, wholesale + MSRP.'},
+      {h:'Purchase Orders',p:'Order book consolidated, allocate by capability, lock lead times.'}
+    ]
+  }
+];
+
+const flow = document.getElementById('flow');
+const detail = document.getElementById('detail');
+
+PHASES.forEach((ph,i)=>{
+  if(i) flow.insertAdjacentHTML('beforeend','<div class="arrow">→</div>');
+  const b = document.createElement('button');
+  b.className = 'p-card';
+  b.style.setProperty('--phase', ph.color);
+  b.dataset.id = ph.id;
+  b.innerHTML = `<div class="dot"></div><h3>${ph.title}</h3><p>${ph.blurb}</p><div class="meta">${ph.meta}</div>`;
+  b.addEventListener('click', ()=>open(ph.id));
+  flow.appendChild(b);
+});
+
+function open(id){
+  const ph = PHASES.find(p=>p.id===id);
+  document.querySelectorAll('.p-card').forEach(c=>c.classList.toggle('on', c.dataset.id===id));
+
+  const steps = ph.steps.map((s,i)=>
+    `<div class="step"><div class="n">${String(i+1).padStart(2,'0')}</div><h4>${s.h}</h4><p>${s.p}</p></div>`
+  ).join('');
+
+  const fan = ph.fan ? `<div class="fan">${ph.fan.map(f=>
+    `<div class="fn" style="--fn:${f.c}"><span class="role">${f.role}</span><h5>${f.h}</h5><p>${f.p}</p></div>`
+  ).join('')}</div>` : '';
+
+  detail.innerHTML = `
+    <div class="detail" style="--phase:${ph.color}">
+      <div class="detail-head"><h2>${ph.title}</h2><span class="who">${ph.who}</span></div>
+      <div class="steps">${steps}</div>
+      ${fan}
+      <div class="gate"><i>◆</i> ${ph.gate}</div>
+    </div>`;
+}
+
+open('concept');
+</script>
+
+</body>
+</html>

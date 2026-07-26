@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <title>Sketch to Shipped</title>
 <style>
@@ -39,6 +40,15 @@
     border:1px solid var(--line);border-radius:999px;padding:6px 16px;
     background:var(--card);
   }
+  .site-nav{display:flex;justify-content:center;gap:8px;margin:20px 0 0;flex-wrap:wrap;}
+  .site-nav a{
+    font-family:inherit;font-size:0.82rem;font-weight:600;text-decoration:none;
+    padding:8px 16px;border-radius:999px;border:1px solid var(--line);
+    background:var(--card);color:var(--sub);transition:all .15s ease;
+  }
+  .site-nav a:hover{border-color:var(--ink);color:var(--ink);}
+  .site-nav a.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+
   nav{
     display:flex;justify-content:center;gap:8px;margin:28px 0 32px;
     flex-wrap:wrap;
@@ -96,7 +106,7 @@
   td.phase{white-space:nowrap;width:120px;font-weight:600;}
 
   .note{max-width:640px;margin:26px auto 0;text-align:center;color:var(--sub);font-size:0.85rem;line-height:1.5;}
-  footer{max-width:640px;margin:40px auto 0;text-align:center;color:var(--sub);font-size:0.68rem;line-height:1.4;opacity:.6;}
+  footer{max-width:640px;margin:44px auto 0;text-align:center;color:var(--sub);font-size:0.68rem;line-height:1.4;opacity:.6;}
   footer .updated{display:inline-flex;align-items:center;gap:5px;margin-top:6px;opacity:1;color:var(--p2);font-weight:600;letter-spacing:.02em;}
   footer .updated svg{width:13px;height:13px;flex-shrink:0;}
 </style>
@@ -109,6 +119,12 @@
     <p class="tagline">Your PLM chart, minus the eye strain.</p>
     <div class="stat">101 boxes → 20-ish "is this okay?" checkpoints → 1 garment</div>
   </header>
+
+  <div class="site-nav">
+    <a href="index.html" class="active">Sketch to Shipped</a>
+    <a href="uniforms/index.html">Uniform Workflow</a>
+    <a href="designer/index.html">Designer Workflow</a>
+  </div>
 
   <nav>
     <button class="active" data-panel="p5">The Big Picture (5)</button>
@@ -220,7 +236,7 @@
 
 </div>
 
-<footer>Built for workshop presentations. Use at your own discretion.<br>Credit: David Secul's Vendor Compliance Handbook (The Fashiondex).<br><span class="updated"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="42"/><rect x="34" y="40" width="30" height="34" rx="2"/><line x1="30" y1="38" x2="68" y2="38"/><circle cx="49" cy="30" r="3"/><line x1="49" y1="33" x2="49" y2="38"/><path d="M64 46 q14 2 14 14 q0 12 -14 14"/><line x1="49" y1="44" x2="49" y2="70"/><line x1="42" y1="52" x2="56" y2="52"/></svg>Freshly pressed — July 25, 2026</span></footer>
+<footer>Built for workshop presentations. Use at your own discretion.<br>Credit: David Secul's Vendor Compliance Handbook (The Fashiondex).<br><span class="updated"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="42"/><rect x="34" y="40" width="30" height="34" rx="2"/><line x1="30" y1="38" x2="68" y2="38"/><circle cx="49" cy="30" r="3"/><line x1="49" y1="33" x2="49" y2="38"/><path d="M64 46 q14 2 14 14 q0 12 -14 14"/><line x1="49" y1="44" x2="49" y2="70"/><line x1="42" y1="52" x2="56" y2="52"/></svg>Freshly pressed — July 26, 2026</span></footer>
 
 <script>
   document.querySelectorAll('nav button').forEach(btn=>{
