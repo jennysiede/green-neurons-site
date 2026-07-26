@@ -125,13 +125,13 @@ const PHASES = [
   {
     id:'concept', color:'var(--p1)', title:'Concept',
     blurb:'Season brief, market, and deliverables.',
-    meta:'5 steps · 1 gate',
-    who:'Season Brief · Market · Deliverables',
-    gate:'Gate 1 — Line plan approved, budget released, calendar locked',
+    meta:'Approved line plan',
+    who:'Creative Director · Merch',
+    gate:'Gate 1 — Line plan approved',
     steps:[
       {h:'Season Brief',     p:'Collection theme, delivery calendar, market position.'},
       {h:'Trend & Research', p:'Runway, archive, mood board, color forecast.'},
-      {h:'Market & Price Positioning',p:'Target customer, price tier, competitive set.'},
+      {h:'Market Position',  p:'Target customer, price tier, competitive set.'},
       {h:'Budget/Timeline',  p:'Development budget, sample calendar, market dates.'},
       {h:'Line Plan',        p:'SKU count, category mix, margin target.'}
     ]
@@ -139,9 +139,9 @@ const PHASES = [
   {
     id:'line', color:'var(--p2)', title:'Line Design',
     blurb:'Assets, material sourcing, and the line.',
-    meta:'4 steps · 5 categories',
-    who:'Assets · Material Sourcing · The Line',
-    gate:'Gate 2 — Line freeze, range plan approved',
+    meta:'5 categories',
+    who:'Design · Merch',
+    gate:'Gate 2 — Line frozen',
     steps:[
       {h:'Silhouettes',       p:'Category → body → style fit.'},
       {h:'Color & Print',     p:'Seasonal palette → prints → placement.'},
@@ -159,33 +159,35 @@ const PHASES = [
   {
     id:'tech', color:'var(--p3)', title:'Technical Design',
     blurb:'Technical flats, swatch approval, and fit specs.',
-    meta:'8 steps · full range',
-    who:'Technical Flats · Swatch Approval · Fit Specs',
-    gate:'Gate 3 — SMS approved, ready for market',
+    meta:'Proto · SMS · PP · TOP',
+    who:'Tech Design · Pattern · Mill',
+    gate:'Gate 3 — SMS approved',
     steps:[
       {h:'Tech Packs',      p:'Flats, POM chart, construction callouts.'},
       {h:'Swatch Review',   p:'Vendor swatches matched to palette, PMS approximation.'},
       {h:'Vendor Confirmation',p:'Stock confirmed, MOQ, lead time.'},
-      {h:'Sample Yardages & Performance Test',p:'Pilling, colorfastness, shrinkage.'},
+      {h:'Yardage & Testing',p:'Pilling, colorfastness, shrinkage.'},
       {h:'Patterns',        p:'Develop styles, Optitex/CLO-3D, fit simulation.'},
-      {h:'Proto Samples & Fit Review',p:'Fit sessions on fit model.'},
-      {h:'Grading',         p:'XXS–3XL across three main fit blocks.'},
-      {h:'Sales Samples (SMS)',p:'Showroom set for market appointments.'}
+      {h:'Proto & Fit',     p:'Fit sessions on fit model.'},
+      {h:'Grading',         p:'Three main fit blocks.'},
+      {h:'SMS',             p:'Showroom set for market appointments.'}
     ]
   },
   {
     id:'cost', color:'var(--p4)', title:'Costing',
     blurb:'Vendors, factories, and quantities.',
-    meta:'6 steps · 3–4 factories',
-    who:'Vendors · Factories · Quantities',
-    gate:'Gate 4 — Margin approved, buy sheet locked',
+    meta:'3–4 factories',
+    who:'Sourcing · Merch · Finance',
+    gate:'Gate 4 — TOP approved',
     steps:[
-      {h:'RFQ Out to Factories',p:'Tech packs and cut tickets to factories.'},
+      {h:'Factory RFQ',    p:'Tech packs and cut tickets out.'},
       {h:'BOM Costing',    p:'Yield, trim, thread, packaging.'},
       {h:'CMT + Finishing',p:'Make cost plus wash and finish.'},
       {h:'MOQ Check',      p:'Styles × sizes × colorways vs minimums.'},
-      {h:'Landed Cost & Margin',p:'Duty, freight, target margin, wholesale + MSRP.'},
-      {h:'Purchase Orders',p:'Order book consolidated, allocate by capability, lock lead times.'}
+      {h:'Landed Cost',    p:'Duty, freight, target margin, MSRP.'},
+      {h:'Purchase Orders',p:'Order book consolidated, lead times locked.'},
+      {h:'PP Sample',      p:'Bulk fabric, bulk factory. Approve before cutting.'},
+      {h:'TOP Sample',     p:'First off the line. Confirms bulk matches PP.'}
     ]
   }
 ];

@@ -125,9 +125,9 @@ const PHASES = [
   {
     id:'concept', color:'var(--p1)', title:'Concept',
     blurb:'Design brief, requirements, and deliverables.',
-    meta:'5 steps · 1 gate',
-    who:'Design Brief · Requirements · Deliverables',
-    gate:'Gate 1 — Contract executed, invoice paid, project scheduled',
+    meta:'Signed contract',
+    who:'Brand · Account · Design',
+    gate:'Gate 1 — Contract executed',
     steps:[
       {h:'RFQ',              p:'New hospitality brand launch, headcount, launch date.'},
       {h:'Brand ID',         p:'Brand book, PMS, logo lockups.'},
@@ -139,8 +139,8 @@ const PHASES = [
   {
     id:'line', color:'var(--p2)', title:'Line Design',
     blurb:'Assets, material sourcing, and the line.',
-    meta:'4 steps · 14 styles',
-    who:'Assets · Material Sourcing · The Line',
+    meta:'5 functions · 14 styles',
+    who:'Design · Brand',
     gate:'Gate 2 — Range plan approved',
     steps:[
       {h:'Garment Types',     p:'Market category → function → style fit.'},
@@ -159,33 +159,33 @@ const PHASES = [
   {
     id:'tech', color:'var(--p3)', title:'Technical Design',
     blurb:'Technical flats, swatch approval, and fit specs.',
-    meta:'8 steps · ×14 styles',
-    who:'Technical Flats · Swatch Approval · Fit Specs',
+    meta:'14 tech packs',
+    who:'Tech Design · Pattern · Mill',
     gate:'Gate 3 — PP approved',
     steps:[
       {h:'Tech Packs',      p:'Flats, POM chart, construction callouts.'},
       {h:'Swatch Review',   p:'Vendor swatches matched to palette, PMS approximation.'},
       {h:'Vendor Confirmation',p:'Stock confirmed, MOQ, lead time.'},
-      {h:'Sample Yardages & Performance Test',p:'Pilling, colorfastness, shrinkage.'},
+      {h:'Yardage & Testing',p:'Pilling, colorfastness, shrinkage.'},
       {h:'Patterns',        p:'Develop styles, Optitex/CLO-3D, fit simulation.'},
-      {h:'Proto Samples & Fit Review',p:'Fit sessions on working staff.'},
-      {h:'Grading',         p:'XXS–6XL across three main fit blocks.'},
-      {h:'Pre-Production (PP) Samples in All Sizes',p:'Small batch wear trial before bulk release.'}
+      {h:'Proto & Fit',     p:'Fit sessions on working staff.'},
+      {h:'Grading',         p:'Three main fit blocks.'},
+      {h:'PP Samples',      p:'Small batch wear trial before bulk.'}
     ]
   },
   {
     id:'cost', color:'var(--p4)', title:'Costing',
     blurb:'Vendors, factories, and quantities.',
-    meta:'6 steps · 3–4 factories',
-    who:'Vendors · Factories · Quantities',
+    meta:'3–4 factories',
+    who:'Sourcing · Merch · Finance',
     gate:'Gate 4 — Program cost approved',
     steps:[
-      {h:'RFQ Out to Factories',p:'Tech packs and cut tickets to factories.'},
+      {h:'Factory RFQ',    p:'Tech packs and cut tickets out.'},
       {h:'BOM Costing',    p:'Yield, trim, thread, packaging.'},
       {h:'CMT + Embroidery',p:'Make cost plus stitch count.'},
       {h:'MOQ Check',      p:'Styles × sizes × colorways vs minimums.'},
       {h:'Landed Cost',    p:'Duty, freight, defect allowance.'},
-      {h:'Purchase Orders',p:'Allocate by capability and schedule, lock lead times.'}
+      {h:'Purchase Orders',p:'Allocate by capability, lock lead times.'}
     ]
   }
 ];
