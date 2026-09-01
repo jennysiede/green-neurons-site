@@ -993,6 +993,19 @@
         -webkit-backdrop-filter: none;
         background: rgba(245,241,235,0.98);
       }
+      /* No scroll-reveal or hero load animation on phones. The page is
+         ~10,700px tall on mobile with 40 reveal elements, so something is
+         in motion almost the whole way down; static reads calmer on a
+         small screen. Desktop keeps both. */
+      .reveal, .reveal.visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .hero-eyebrow, h1, .hero-sub, .hero-cta {
+        opacity: 1;
+        animation: none;
+      }
       .philosophy-inner,
       #contact .contact-inner { grid-template-columns: 1fr; gap: 48px; }
       .process-grid { grid-template-columns: 1fr 1fr; }
