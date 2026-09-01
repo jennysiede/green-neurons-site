@@ -61,7 +61,7 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 
     body {
       background: var(--bg);
@@ -982,7 +982,93 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ── Founder ── */
+    .founder-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .founder-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 32px;
+    }
+    .founder-name {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .founder-role {
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.6;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .founder-facts {
+      list-style: none; margin: 0 0 28px; padding: 0;
+      border-top: 1px solid var(--border);
+    }
+    .founder-facts li {
+      display: flex; justify-content: space-between; gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--sans);
+      font-size: 0.86rem;
+    }
+    .founder-facts .k { color: var(--text-muted); }
+    .founder-facts .v { color: var(--text-mid); text-align: right; }
+    .founder-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--sans);
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--accent);
+      padding-bottom: 4px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .founder-link:hover { color: var(--navy); border-color: var(--navy); }
+    .founder-body p { margin-bottom: 22px; color: var(--text-mid); line-height: 1.85; }
+    .founder-lead {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      line-height: 1.45;
+      color: var(--navy) !important;
+      margin-bottom: 26px !important;
+    }
+    .founder-body p:last-child { margin-bottom: 0; }
+    .founder-body strong { color: var(--navy); font-weight: 500; }
+
+    /* quiet tertiary link under the hero buttons */
+    .hero-aside {
+      margin-top: 26px;
+      opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+    }
+    .hero-aside a {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border-strong);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .hero-aside a:hover { color: var(--accent); border-color: var(--accent); }
+
     /* ── Responsive ── */
+    /* keep the 7-item nav on one line at laptop widths */
+    @media (max-width: 1180px) and (min-width: 769px) {
+      .nav-links { gap: 18px; }
+      .nav-links a { font-size: 11px; letter-spacing: 0.05em; }
+      .nav-right { gap: 18px; }
+    }
     @media (max-width: 768px) {
       /* Drop the frosted-glass nav on phones. backdrop-filter forces the
          compositor to re-blur the page behind a fixed element on every
@@ -1002,7 +1088,7 @@
         transform: none;
         transition: none;
       }
-      .hero-eyebrow, h1, .hero-sub, .hero-cta {
+      .hero-eyebrow, h1, .hero-sub, .hero-cta, .hero-aside {
         opacity: 1;
         animation: none;
       }
@@ -1111,6 +1197,7 @@
       <ul class="nav-links">
         <li><a href="#capabilities">Capabilities</a></li>
         <li><a href="#philosophy">Philosophy</a></li>
+        <li><a href="#founder">Founder</a></li>
         <li><a href="#color-trends">Color Trends</a></li>
         <li><a href="#tracker">Route Tracker</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -1150,6 +1237,7 @@
         <a href="#capabilities" class="btn-primary">Explore Capabilities</a>
         <a href="#contact" class="btn-ghost">Work With Us</a>
       </div>
+      <p class="hero-aside"><a href="#founder">Meet our founder &rarr;</a></p>
     </div>
   </div>
 </section>
@@ -1379,6 +1467,37 @@
 </section>
 
 
+<!-- ── FOUNDER ── -->
+<section id="founder">
+  <div class="container">
+    <p class="section-label reveal">Founder</p>
+    <h2 class="reveal">Twelve rounds<br><em>is a specification problem.</em></h2>
+    <div class="founder-inner" style="margin-top:56px;">
+      <div class="founder-card reveal">
+        <div class="founder-name">Jenny Siede</div>
+        <div class="founder-role">Founder, Designer &amp; System Thinker</div>
+        <ul class="founder-facts">
+          <li><span class="k">Discipline</span><span class="v">Apparel technical design</span></li>
+          <li><span class="k">Also</span><span class="v">AI workflow &amp; product lifecycle</span></li>
+          <li><span class="k">Experience</span><span class="v">20+ years in product development</span></li>
+          <li><span class="k">Based</span><span class="v">USA</span></li>
+        </ul>
+        <a href="https://jennysiede.com" class="founder-link" target="_blank" rel="noopener">
+          Full portfolio &rarr;
+        </a>
+      </div>
+      <div class="founder-body">
+        <p class="founder-lead reveal">Green Neurons is an idea-to-production studio.</p>
+        <p class="reveal">The average apparel program burns twelve rounds of sampling before it reaches production. Most of those rounds aren't design problems. They're specification problems &mdash; a measurement that meant two things, a construction note the factory read differently than you did.</p>
+        <p class="reveal">A technical specification is the blueprint for your brand. Written properly, it takes twelve rounds down to two or three &mdash; and the same document that makes your first sample right makes your ten-thousandth unit right.</p>
+        <p class="reveal">That's the work: the blueprint, the sourcing through our global partners, and the assets. Built once, built to scale. <strong>You own every file.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
 <section id="contact" class="section-alt">
   <div class="container">
     <div class="contact-inner">
@@ -1447,6 +1566,8 @@
     <ul class="footer-links">
       <li><a href="#capabilities">Capabilities</a></li>
       <li><a href="#tracker">Tracker</a></li>
+      <li><a href="#founder">Founder</a></li>
+      <li><a href="https://jennysiede.com" target="_blank" rel="noopener">jennysiede.com</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
