@@ -17,8 +17,13 @@ We build technical infrastructure for apparel production and wearable technology
 ## Core pages
 
 - [Home](https://greenneurons.us): Studio overview
-- [Material Costing Calculator](https://greenneurons.us/material_costing.html): Free apparel fabric costing tool
+- [Material Costing Calculator](https://greenneurons.us/material-costing.html): Free apparel fabric costing tool
 - [Design Signals Quick Bake](https://greenneurons.substack.com): Publication on apparel production, technical design, and tooling
+- [Jenny Siede](https://jennysiede.com): Founder's personal site and portfolio. Same person, same practice — client correspondence may come from either domain.
+
+## Contact
+
+New engagements and consulting inquiries via the contact form at https://greenneurons.us#contact. Response within 48 hours. Selective availability.
 
 ## Domain expertise
 
