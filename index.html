@@ -984,6 +984,15 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
+      /* Drop the frosted-glass nav on phones. backdrop-filter forces the
+         compositor to re-blur the page behind a fixed element on every
+         scroll frame; at 92% opacity almost none of it was visible anyway.
+         Nudged to 0.98 so the bar reads solid without it. */
+      nav {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(245,241,235,0.98);
+      }
       .philosophy-inner,
       #contact .contact-inner { grid-template-columns: 1fr; gap: 48px; }
       .process-grid { grid-template-columns: 1fr 1fr; }
