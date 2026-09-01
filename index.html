@@ -61,7 +61,7 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 
     body {
       background: var(--bg);
@@ -1466,11 +1466,11 @@
           Full portfolio &rarr;
         </a>
       </div>
-      <div class="founder-body reveal">
-        <p class="founder-lead">Green Neurons is an idea-to-production studio.</p>
-        <p>The average apparel program burns twelve rounds of sampling before it reaches production. Most of those rounds aren't design problems. They're specification problems &mdash; a measurement that meant two things, a construction note the factory read differently than you did.</p>
-        <p>A technical specification is the blueprint for your brand. Written properly, it takes twelve rounds down to two or three &mdash; and the same document that makes your first sample right makes your ten-thousandth unit right.</p>
-        <p>That's the work: the blueprint, the sourcing through our global partners, and the assets. Built once, built to scale. <strong>You own every file.</strong></p>
+      <div class="founder-body">
+        <p class="founder-lead reveal">Green Neurons is an idea-to-production studio.</p>
+        <p class="reveal">The average apparel program burns twelve rounds of sampling before it reaches production. Most of those rounds aren't design problems. They're specification problems &mdash; a measurement that meant two things, a construction note the factory read differently than you did.</p>
+        <p class="reveal">A technical specification is the blueprint for your brand. Written properly, it takes twelve rounds down to two or three &mdash; and the same document that makes your first sample right makes your ten-thousandth unit right.</p>
+        <p class="reveal">That's the work: the blueprint, the sourcing through our global partners, and the assets. Built once, built to scale. <strong>You own every file.</strong></p>
       </div>
     </div>
   </div>
@@ -1799,7 +1799,7 @@ const io = new IntersectionObserver((entries) => {
       io.unobserve(e.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.1, rootMargin: '0px 0px 120px 0px' });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* ═══════════════════════════════════════════════════
